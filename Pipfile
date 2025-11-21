@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+plotly = "*"
+scikit-learn = "*"
+lightgbm = "*"
+bayesian-optimization = "*"
+ipykernel = "*"
+ipywidgets = "*"
+nbformat = "*"
+matplotlib = "*"
+graphviz = "*"
+shap = "*"
+catboost = "*"
+xgboost = "*"
+pm4py = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.13"
