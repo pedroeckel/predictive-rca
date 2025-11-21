@@ -1,54 +1,59 @@
 # Predictive RCA
 
-Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de processo. O pipeline transforma um log de eventos em um dataset em nível de caso, treina modelos de classificação, otimiza hiperparâmetros e entrega explicações globais e locais (SHAP) sobre violações de SLA.
+Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de processo. Do CSV de eventos ao dataset por caso, o pipeline treina diferentes classificadores, permite otimizar o LightGBM e entrega explicações globais e locais (SHAP) sobre violações de SLA.
 
 ## Principais recursos
-- Engenharia de atributos por caso (tempo total, número de eventos, retrabalho, atividade inicial/final, custo médio).
-- Split estratificado em treino/validação/teste preservando balanceamento da classe alvo.
-- Pré-processamento com `ColumnTransformer` (numéricos + One-Hot para categóricos).
-- Modelos plugáveis via interface `BaseModel` (LightGBM, RandomForest, Regressão Logística); otimização bayesiana disponível para LightGBM.
-- Avaliação com AUC-ROC, relatório de classificação e matriz de confusão.
-- Explicabilidade: importância de features (árvores) e gráficos SHAP (summary, dependence, force plot).
+- Interface `BaseModel` com wrappers prontos: LightGBM, XGBoost, CatBoost, RandomForest e Regressão Logística; escolha via CLI ou código.
+- Pipeline CLI interativo (`python -m src.main`) para informar log, modelos e SLA, executando cada modelo em sequência; flags opcionais permitem pular prompts.
+- Otimização bayesiana embutida para LightGBM (log loss negativo em validação).
+- Engenharia de atributos por caso (tempo total, número de eventos, retrabalho, atividade inicial/final, recurso inicial, custo médio).
+- Split estratificado em treino/validação/teste mantendo o balanceamento da classe alvo.
+- Pré-processamento com `ColumnTransformer` (numéricos em *passthrough* + One-Hot para categóricos).
+- Avaliação com AUC-ROC, classification report e matriz de confusão; importância de features (árvores) e gráficos SHAP (summary, dependence, force plot).
 
 ## Estrutura do projeto
-- `src/main.py`: ponto de entrada para rodar o pipeline completo.
-- `src/pipeline/pipeline_builder.py`: orquestra todo o fluxo, da leitura do log até SHAP.
-- `src/preprocessing/`: construção de features de caso, split estratificado e pré-processamento.
-- `src/models/`: implementações que seguem `BaseModel` (LightGBM, RandomForest, LogisticRegression).
-- `src/evaluation/`: métricas de classificação, importância de features e análises SHAP.
-- `src/optimization/bayesian.py`: wrapper para otimização bayesiana de hiperparâmetros.
+- `src/main.py`: CLI interativo/parametrizável (log, modelos, SLA, otimização).
+- `src/pipeline/pipeline_builder.py`: orquestra leitura do log, *feature engineering*, split, pré-processamento, treino, avaliação e SHAP.
+- `src/preprocessing/`: construção de features por caso (`build_case_features`), split estratificado e pré-processamento (`ColumnTransformer`).
+- `src/models/`: wrappers que seguem `BaseModel` (LightGBM, XGBoost, CatBoost, RandomForest, LogisticRegression).
+- `src/evaluation/`: métricas, importância de features e análises SHAP.
+- `src/optimization/bayesian.py`: otimização bayesiana usada pelo LightGBM.
+- `docs/`: referências rápidas (`comparativo_modelos.md`, `otimizadores.md`, material de RCA).
 - `data/raw/`: logs de eventos de entrada (ex.: `event_log_sintetico_2000_cases.csv`).
-- `docs/`: materiais de apoio sobre RCA.
 
 ## Requisitos
 - Python 3.13 (definido em `Pipfile`).
 - `pipenv` para gerenciamento de ambiente.
-- Dependências principais: `pandas`, `scikit-learn`, `lightgbm`, `bayesian-optimization`, `matplotlib`, `shap` (ver `Pipfile` completo).
+- Dependências principais: `pandas`, `scikit-learn`, `lightgbm`, `xgboost`, `catboost`, `bayesian-optimization`, `matplotlib`, `shap` (ver `Pipfile` completo).
 
 ## Como rodar
 1. Instale as dependências:
    ```bash
    pipenv install
    ```
-2. Ative o ambiente virtual:
+2. Execute o pipeline (interativo por padrão):
    ```bash
-   pipenv shell
+   pipenv run python -m src.main
    ```
-3. Execute o pipeline (a partir da raiz do repositório):
+   O script pedirá o caminho do CSV do log (ex.: `data/raw/event_log_sintetico_2000_cases.csv`), modelos desejados (`lightgbm` padrão) e SLA (48h por default no prompt).
+3. Para pular prompts, use os argumentos:
    ```bash
-   python -m src.main
+   pipenv run python -m src.main \
+     --log data/raw/event_log_sintetico_2000_cases.csv \
+     --models lightgbm,random_forest,catboost \
+     --sla_hours 24 \
+     --optimize              # ativa busca bayesiana só para LightGBM
    ```
-   O script usa por padrão `data/raw/event_log_sintetico_2000_cases.csv` e SLA de 12h (`CONFIG.SLA_HOURS`).
 
 ### Usando outro log ou modelo
 ```python
 from src.pipeline.pipeline_builder import PipelineBuilder
-from src.models.random_forest import RandomForestModel
+from src.models.catboost_model import CatBoostModel
 
 pipeline = PipelineBuilder(
-    model_class=RandomForestModel,
-    model_params={"n_estimators": 400, "max_depth": 12},
-    optimize_hyperparams=False,  # otimização bayesiana só para LightGBM
+    model_class=CatBoostModel,
+    model_params={"depth": 8, "learning_rate": 0.1, "iterations": 400},
+    optimize_hyperparams=False,  # bayesiana só afeta LightGBM
 )
 pipeline.run_from_event_log("data/raw/seu_log.csv", sla_hours=24)
 ```
@@ -69,9 +74,14 @@ pipeline.run_from_event_log("data/raw/seu_log.csv", sla_hours=24)
 - Artefatos do pré-processamento (nomes de features expandidas) retornados pelo `PipelineBuilder`.
 
 ## Configurações úteis
-- `src/config/settings.py`: `RANDOM_STATE`, `SLA_HOURS` e diretórios padrão.
-- Ajuste `optimize_hyperparams` em `PipelineBuilder` para ativar/desativar a otimização bayesiana do LightGBM.
-- Substitua o dataset padrão em `src/main.py` ou passe o caminho diretamente em `run_from_event_log`.
+- `src/config/settings.py`: `RANDOM_STATE`, `SLA_HOURS` (12h na lib) e diretórios padrão. O CLI usa 48h como valor sugerido no prompt, ajustável com `--sla_hours`.
+- `optimize_hyperparams` em `PipelineBuilder` ativa/desativa a otimização bayesiana do LightGBM.
+- Substitua o dataset em `src/main.py` (argumento `--log`) ou passe o caminho diretamente em `run_from_event_log`.
+
+## Documentação de apoio
+- Comparativo dos modelos integrados: `docs/comparativo_modelos.md`.
+- Estratégias de busca de hiperparâmetros: `docs/otimizadores.md`.
+- Visão conceitual de RCA em mineração de processos: `docs/Root Cause Analysis – RCA.md`.
 
 ## Notebooks
 Use `pipenv run jupyter notebook` para explorar `notebooks/` com o ambiente configurado.
