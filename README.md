@@ -31,6 +31,10 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
    ```bash
    pipenv install
    ```
+2. Rode o ambiente python:
+   ```bash
+   pipenv shell
+   ```
 2. Execute o pipeline (interativo por padrão):
    ```bash
    pipenv run python -m src.main
