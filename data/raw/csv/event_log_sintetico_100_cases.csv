@@ -1,0 +1,603 @@
+case_id,activity,timestamp,resource,cost
+1,Receber Pedido,2025-01-07 15:15:00,Marina,129.72
+1,Validar Dados,2025-01-07 15:53:30,Marina,95.23
+1,Analisar Crédito,2025-01-08 03:12:09,Pedro,84.21
+1,Finalizar,2025-01-09 23:12:09,Marina,40.98
+2,Receber Pedido,2025-01-01 15:39:00,Marina,83.41
+2,Validar Dados,2025-01-01 17:06:00,Marina,86.03
+2,Analisar Crédito,2025-01-01 20:21:09,Marina,91.71
+2,Aprovar Pedido,2025-01-06 15:34:56,Marina,59.72
+2,Finalizar,2025-01-07 18:34:56,Pedro,40.57
+3,Receber Pedido,2025-01-26 13:45:00,Marina,129.97
+3,Validar Dados,2025-01-26 14:29:53,Marina,91.3
+3,Validar Dados,2025-01-26 15:17:04,Marina,83.73
+3,Analisar Crédito,2025-01-26 16:26:09,Marina,73.46
+3,Aprovar Pedido,2025-01-29 21:36:50,Marina,57.18
+3,Finalizar,2025-01-30 01:45:50,Marina,41.04
+4,Receber Pedido,2025-01-15 15:35:00,Marina,124.86
+4,Validar Dados,2025-01-16 04:36:21,Pedro,65.21
+4,Validar Dados,2025-01-16 06:21:20,Marina,72.8
+4,Analisar Crédito,2025-01-17 05:20:01,Pedro,79.88
+4,Analisar Crédito,2025-01-17 11:52:28,Pedro,83.84
+4,Aprovar Pedido,2025-01-20 16:58:40,Marina,65.09
+4,Finalizar,2025-01-20 20:00:40,Marina,34.56
+5,Receber Pedido,2025-01-05 16:09:00,Pedro,97.38
+5,Validar Dados,2025-01-06 00:33:28,Pedro,91.0
+5,Analisar Crédito,2025-01-07 13:49:46,Pedro,89.14
+5,Revisar Documentação,2025-01-07 15:37:24,Marina,80.04
+5,Aprovar Pedido,2025-01-12 02:16:52,Marina,86.98
+5,Finalizar,2025-01-12 03:57:52,Pedro,34.48
+6,Receber Pedido,2025-01-28 15:40:00,Marina,119.1
+6,Validar Dados,2025-01-28 17:39:00,Marina,89.61
+6,Validar Dados,2025-01-29 05:22:27,Pedro,65.81
+6,Analisar Crédito,2025-01-29 10:14:58,Marina,92.28
+6,Analisar Crédito,2025-01-30 09:56:32,Pedro,96.02
+6,Aprovar Pedido,2025-02-10 12:59:03,Pedro,69.27
+6,Finalizar,2025-02-10 16:06:03,Pedro,35.79
+7,Receber Pedido,2025-01-25 12:42:00,Marina,115.09
+7,Validar Dados,2025-01-26 06:25:04,Pedro,81.27
+7,Validar Dados,2025-01-26 07:58:28,Marina,67.51
+7,Validar Dados,2025-01-26 17:53:05,Pedro,73.34
+7,Analisar Crédito,2025-01-26 20:39:07,Marina,83.83
+7,Finalizar,2025-01-26 22:17:07,Pedro,28.49
+8,Receber Pedido,2025-01-17 09:20:00,Pedro,119.6
+8,Validar Dados,2025-01-17 10:30:36,Marina,84.78
+8,Validar Dados,2025-01-17 11:00:17,Marina,77.41
+8,Validar Dados,2025-01-17 12:24:22,Marina,91.43
+8,Validar Dados,2025-01-17 13:44:46,Marina,87.52
+8,Analisar Crédito,2025-01-18 17:22:40,Pedro,104.62
+8,Aprovar Pedido,2025-01-22 21:13:05,Marina,56.88
+8,Finalizar,2025-01-23 01:19:05,Marina,44.31
+9,Receber Pedido,2025-01-19 10:27:00,Marina,105.73
+9,Validar Dados,2025-01-20 02:11:53,Pedro,72.17
+9,Analisar Crédito,2025-01-20 16:35:03,Pedro,86.14
+9,Analisar Crédito,2025-01-22 02:31:22,Pedro,90.16
+9,Finalizar,2025-01-22 06:47:22,Pedro,42.27
+10,Receber Pedido,2025-01-05 10:39:00,Marina,101.45
+10,Validar Dados,2025-01-06 00:05:54,Pedro,66.8
+10,Validar Dados,2025-01-06 11:14:19,Pedro,73.2
+10,Analisar Crédito,2025-01-06 16:11:57,Marina,92.79
+10,Aprovar Pedido,2025-02-19 18:01:43,Pedro,52.12
+10,Finalizar,2025-02-19 21:43:43,Marina,33.44
+11,Receber Pedido,2025-01-16 19:20:00,Marina,119.93
+11,Validar Dados,2025-01-16 20:12:13,Marina,76.17
+11,Analisar Crédito,2025-01-16 22:57:25,Marina,97.61
+11,Aprovar Pedido,2025-03-04 11:48:41,Pedro,84.49
+11,Finalizar,2025-03-04 12:55:41,Pedro,47.26
+12,Receber Pedido,2025-01-30 18:08:00,Pedro,128.07
+12,Validar Dados,2025-01-30 19:38:05,Marina,69.29
+12,Analisar Crédito,2025-01-31 10:19:44,Pedro,95.79
+12,Analisar Crédito,2025-01-31 12:13:44,Marina,88.51
+12,Finalizar,2025-01-31 16:23:44,Marina,44.44
+13,Receber Pedido,2025-01-29 10:40:00,Marina,123.21
+13,Validar Dados,2025-01-30 02:44:47,Pedro,67.54
+13,Validar Dados,2025-01-30 12:55:05,Pedro,80.58
+13,Validar Dados,2025-01-31 00:02:07,Pedro,68.57
+13,Analisar Crédito,2025-01-31 02:04:40,Marina,68.38
+13,Aprovar Pedido,2025-02-04 01:22:06,Marina,63.74
+13,Finalizar,2025-02-04 03:18:06,Pedro,32.9
+14,Receber Pedido,2025-01-08 16:31:00,Marina,127.42
+14,Validar Dados,2025-01-09 03:04:44,Pedro,72.27
+14,Analisar Crédito,2025-01-09 12:39:48,Pedro,87.16
+14,Revisar Documentação,2025-01-10 13:48:11,Pedro,65.85
+14,Aprovar Pedido,2025-01-14 04:23:07,Marina,60.64
+14,Finalizar,2025-01-14 07:03:07,Pedro,49.36
+15,Receber Pedido,2025-01-12 18:19:00,Marina,121.93
+15,Validar Dados,2025-01-12 19:38:33,Marina,96.64
+15,Analisar Crédito,2025-01-13 07:37:20,Pedro,81.13
+15,Revisar Documentação,2025-01-13 23:04:19,Pedro,62.07
+15,Aprovar Pedido,2025-02-05 19:51:10,Pedro,59.08
+15,Finalizar,2025-02-05 23:10:10,Pedro,32.8
+16,Receber Pedido,2025-01-01 09:35:00,Marina,114.98
+16,Validar Dados,2025-01-01 12:04:02,Marina,82.71
+16,Validar Dados,2025-01-01 18:25:16,Pedro,102.45
+16,Analisar Crédito,2025-01-01 21:35:32,Marina,75.8
+16,Revisar Documentação,2025-01-02 01:07:56,Marina,72.29
+16,Aprovar Pedido,2025-01-07 21:48:53,Marina,59.84
+16,Finalizar,2025-01-07 23:20:53,Marina,34.4
+17,Receber Pedido,2025-01-30 13:56:00,Marina,143.15
+17,Validar Dados,2025-01-31 05:58:08,Pedro,93.23
+17,Analisar Crédito,2025-01-31 09:47:40,Marina,101.67
+17,Analisar Crédito,2025-01-31 20:34:18,Pedro,108.53
+17,Revisar Documentação,2025-02-01 16:17:52,Pedro,77.49
+17,Aprovar Pedido,2025-03-16 19:18:31,Pedro,74.47
+17,Finalizar,2025-03-16 21:22:31,Pedro,41.69
+18,Receber Pedido,2025-01-17 09:29:00,Marina,110.66
+18,Validar Dados,2025-01-17 10:26:02,Marina,79.72
+18,Validar Dados,2025-01-18 05:11:45,Pedro,62.84
+18,Validar Dados,2025-01-18 17:38:01,Pedro,79.1
+18,Analisar Crédito,2025-01-18 21:05:19,Marina,83.93
+18,Analisar Crédito,2025-01-19 21:53:58,Pedro,82.62
+18,Aprovar Pedido,2025-02-16 04:48:56,Pedro,63.06
+18,Finalizar,2025-02-16 08:50:56,Marina,44.95
+19,Receber Pedido,2025-01-09 12:32:00,Pedro,132.2
+19,Validar Dados,2025-01-09 13:24:43,Marina,77.61
+19,Analisar Crédito,2025-01-11 01:01:35,Pedro,100.25
+19,Finalizar,2025-01-11 02:52:35,Marina,51.47
+20,Receber Pedido,2025-01-21 09:08:00,Marina,135.98
+20,Validar Dados,2025-01-21 23:51:51,Pedro,98.14
+20,Analisar Crédito,2025-01-22 03:49:07,Marina,94.85
+20,Analisar Crédito,2025-01-22 05:22:07,Marina,72.73
+20,Aprovar Pedido,2025-02-03 17:05:21,Pedro,56.93
+20,Finalizar,2025-02-05 11:05:21,Marina,46.36
+21,Receber Pedido,2025-01-22 16:19:00,Marina,123.56
+21,Validar Dados,2025-01-23 06:09:38,Pedro,72.82
+21,Validar Dados,2025-01-24 03:14:25,Pedro,77.87
+21,Validar Dados,2025-01-24 04:16:29,Marina,76.98
+21,Analisar Crédito,2025-01-24 06:40:32,Marina,89.95
+21,Revisar Documentação,2025-01-24 19:50:04,Pedro,58.96
+21,Aprovar Pedido,2025-02-19 20:49:57,Pedro,66.09
+21,Finalizar,2025-02-19 23:45:57,Marina,40.42
+22,Receber Pedido,2025-01-11 11:48:00,Marina,134.75
+22,Validar Dados,2025-01-11 13:04:24,Marina,94.51
+22,Validar Dados,2025-01-11 15:10:20,Marina,89.59
+22,Analisar Crédito,2025-01-11 18:33:29,Marina,116.28
+22,Aprovar Pedido,2025-02-03 05:02:18,Pedro,53.53
+22,Finalizar,2025-02-03 09:41:18,Marina,32.05
+23,Receber Pedido,2025-01-27 16:21:00,Marina,108.43
+23,Validar Dados,2025-01-27 17:41:42,Marina,71.02
+23,Analisar Crédito,2025-01-29 23:08:05,Pedro,95.9
+23,Analisar Crédito,2025-01-30 04:26:49,Marina,74.16
+23,Aprovar Pedido,2025-02-26 22:13:00,Pedro,74.65
+23,Finalizar,2025-02-27 01:10:00,Pedro,41.77
+24,Receber Pedido,2025-01-25 19:28:00,Marina,103.54
+24,Validar Dados,2025-01-25 20:08:29,Marina,83.42
+24,Analisar Crédito,2025-01-26 17:24:48,Pedro,112.94
+24,Finalizar,2025-01-26 20:48:48,Pedro,35.56
+25,Receber Pedido,2025-01-01 08:50:00,Pedro,110.26
+25,Validar Dados,2025-01-02 03:03:46,Pedro,64.66
+25,Analisar Crédito,2025-01-03 00:48:59,Pedro,105.33
+25,Aprovar Pedido,2025-01-05 20:03:09,Marina,63.31
+25,Finalizar,2025-01-05 23:33:09,Marina,48.05
+26,Receber Pedido,2025-01-15 11:48:00,Marina,105.53
+26,Validar Dados,2025-01-15 12:48:34,Marina,86.86
+26,Analisar Crédito,2025-01-16 19:03:22,Pedro,100.63
+26,Aprovar Pedido,2025-01-19 18:56:25,Marina,58.9
+26,Finalizar,2025-01-19 20:46:25,Marina,45.81
+27,Receber Pedido,2025-01-10 11:03:00,Marina,129.69
+27,Validar Dados,2025-01-10 11:30:26,Marina,79.94
+27,Validar Dados,2025-01-10 13:06:43,Marina,84.03
+27,Analisar Crédito,2025-01-10 14:33:58,Marina,94.4
+27,Revisar Documentação,2025-01-10 18:03:13,Marina,60.6
+27,Aprovar Pedido,2025-01-13 20:09:33,Marina,55.76
+27,Finalizar,2025-01-15 16:09:33,Marina,35.24
+28,Receber Pedido,2025-01-06 16:32:00,Pedro,131.79
+28,Validar Dados,2025-01-06 17:43:31,Marina,77.13
+28,Analisar Crédito,2025-01-06 22:26:51,Marina,100.22
+28,Aprovar Pedido,2025-02-12 05:11:37,Pedro,55.04
+28,Finalizar,2025-02-12 06:24:37,Pedro,30.91
+29,Receber Pedido,2025-01-24 14:25:00,Marina,140.5
+29,Validar Dados,2025-01-24 15:02:16,Marina,88.67
+29,Analisar Crédito,2025-01-24 21:55:59,Pedro,95.65
+29,Aprovar Pedido,2025-01-29 13:31:51,Marina,58.5
+29,Finalizar,2025-01-29 18:21:51,Pedro,39.71
+30,Receber Pedido,2025-01-22 15:53:00,Pedro,109.46
+30,Validar Dados,2025-01-22 17:28:38,Marina,68.07
+30,Analisar Crédito,2025-01-22 19:51:22,Marina,108.28
+30,Aprovar Pedido,2025-01-23 23:29:16,Marina,64.31
+30,Finalizar,2025-01-24 01:32:16,Pedro,28.52
+31,Receber Pedido,2025-01-13 14:16:00,Pedro,134.12
+31,Validar Dados,2025-01-14 02:23:44,Pedro,91.89
+31,Analisar Crédito,2025-01-14 22:34:31,Pedro,89.5
+31,Aprovar Pedido,2025-02-05 23:14:16,Pedro,61.39
+31,Finalizar,2025-02-06 01:32:16,Marina,45.45
+32,Receber Pedido,2025-01-06 09:57:00,Marina,127.51
+32,Validar Dados,2025-01-06 10:48:31,Marina,70.22
+32,Validar Dados,2025-01-07 01:26:34,Pedro,73.37
+32,Validar Dados,2025-01-07 08:58:10,Pedro,85.71
+32,Analisar Crédito,2025-01-07 10:34:44,Marina,93.12
+32,Aprovar Pedido,2025-01-10 11:30:42,Marina,52.77
+32,Finalizar,2025-01-10 12:32:42,Marina,39.11
+33,Receber Pedido,2025-01-10 12:20:00,Marina,113.89
+33,Validar Dados,2025-01-10 16:29:13,Pedro,103.9
+33,Validar Dados,2025-01-10 18:23:11,Marina,73.96
+33,Validar Dados,2025-01-11 19:36:22,Pedro,81.7
+33,Validar Dados,2025-01-11 20:47:48,Marina,80.89
+33,Analisar Crédito,2025-01-13 04:42:12,Pedro,88.56
+33,Analisar Crédito,2025-01-13 20:57:19,Pedro,91.36
+33,Aprovar Pedido,2025-01-17 04:01:12,Marina,62.32
+33,Finalizar,2025-01-17 08:57:12,Marina,52.45
+34,Receber Pedido,2025-01-10 09:28:00,Pedro,146.59
+34,Validar Dados,2025-01-10 11:12:42,Marina,76.02
+34,Validar Dados,2025-01-10 12:27:43,Marina,61.39
+34,Validar Dados,2025-01-10 13:02:23,Marina,89.97
+34,Analisar Crédito,2025-01-10 16:34:11,Marina,62.53
+34,Aprovar Pedido,2025-01-12 10:24:50,Marina,71.46
+34,Finalizar,2025-01-12 11:56:50,Marina,45.8
+35,Receber Pedido,2025-01-04 10:36:00,Pedro,121.23
+35,Validar Dados,2025-01-05 00:08:39,Pedro,76.48
+35,Analisar Crédito,2025-01-06 06:52:50,Pedro,84.9
+35,Aprovar Pedido,2025-01-09 23:19:40,Marina,57.84
+35,Finalizar,2025-01-10 00:23:40,Pedro,34.13
+36,Receber Pedido,2025-01-29 08:46:00,Marina,139.96
+36,Validar Dados,2025-01-29 10:03:00,Marina,99.99
+36,Validar Dados,2025-01-29 14:58:12,Pedro,68.22
+36,Analisar Crédito,2025-01-29 16:03:13,Marina,81.84
+36,Aprovar Pedido,2025-02-22 07:39:56,Pedro,65.15
+36,Finalizar,2025-02-25 06:39:56,Pedro,49.39
+37,Receber Pedido,2025-01-04 10:12:00,Pedro,108.14
+37,Validar Dados,2025-01-05 04:47:28,Pedro,84.71
+37,Validar Dados,2025-01-05 09:42:06,Pedro,70.1
+37,Analisar Crédito,2025-01-06 12:38:23,Pedro,88.49
+37,Analisar Crédito,2025-01-06 13:54:16,Marina,90.67
+37,Aprovar Pedido,2025-01-09 23:56:03,Marina,68.75
+37,Finalizar,2025-01-10 01:52:03,Pedro,45.11
+38,Receber Pedido,2025-01-11 14:25:00,Marina,85.19
+38,Validar Dados,2025-01-11 16:58:18,Marina,84.72
+38,Analisar Crédito,2025-01-11 18:09:37,Marina,71.64
+38,Aprovar Pedido,2025-02-22 07:56:10,Pedro,51.86
+38,Finalizar,2025-02-22 11:52:10,Marina,43.1
+39,Receber Pedido,2025-01-20 18:29:00,Marina,99.91
+39,Validar Dados,2025-01-21 04:03:14,Pedro,81.49
+39,Analisar Crédito,2025-01-21 07:18:25,Marina,84.62
+39,Aprovar Pedido,2025-01-23 09:51:28,Marina,43.01
+39,Finalizar,2025-01-24 22:51:28,Marina,41.41
+40,Receber Pedido,2025-01-22 09:52:00,Marina,147.27
+40,Validar Dados,2025-01-22 10:17:38,Marina,74.32
+40,Validar Dados,2025-01-22 11:21:52,Marina,77.78
+40,Analisar Crédito,2025-01-22 15:36:44,Marina,86.92
+40,Aprovar Pedido,2025-02-10 22:03:11,Pedro,68.19
+40,Finalizar,2025-02-13 20:03:11,Marina,45.78
+41,Receber Pedido,2025-01-28 12:23:00,Marina,122.59
+41,Validar Dados,2025-01-28 15:05:30,Marina,63.07
+41,Analisar Crédito,2025-01-28 17:20:34,Marina,79.19
+41,Aprovar Pedido,2025-02-09 21:42:22,Pedro,70.94
+41,Finalizar,2025-02-10 01:58:22,Pedro,45.75
+42,Receber Pedido,2025-01-20 16:42:00,Pedro,139.74
+42,Validar Dados,2025-01-20 18:36:46,Marina,62.47
+42,Analisar Crédito,2025-01-21 12:38:13,Pedro,92.53
+42,Aprovar Pedido,2025-01-28 04:57:15,Marina,59.23
+42,Finalizar,2025-01-28 09:31:15,Pedro,37.99
+43,Receber Pedido,2025-01-19 11:28:00,Pedro,140.19
+43,Validar Dados,2025-01-19 13:25:38,Marina,86.17
+43,Validar Dados,2025-01-19 23:13:21,Pedro,68.0
+43,Analisar Crédito,2025-01-20 23:58:05,Pedro,101.4
+43,Aprovar Pedido,2025-02-09 15:40:27,Pedro,64.32
+43,Finalizar,2025-02-09 19:12:27,Marina,50.87
+44,Receber Pedido,2025-01-21 13:41:00,Marina,119.69
+44,Validar Dados,2025-01-22 07:51:42,Pedro,87.12
+44,Validar Dados,2025-01-22 08:44:14,Marina,66.67
+44,Validar Dados,2025-01-22 10:35:13,Marina,94.04
+44,Analisar Crédito,2025-01-22 12:56:15,Marina,84.05
+44,Aprovar Pedido,2025-02-07 03:53:28,Pedro,66.6
+44,Finalizar,2025-02-07 08:44:28,Marina,39.25
+45,Receber Pedido,2025-01-03 13:09:00,Pedro,127.4
+45,Validar Dados,2025-01-03 14:24:38,Marina,81.85
+45,Validar Dados,2025-01-03 15:36:09,Marina,74.24
+45,Analisar Crédito,2025-01-04 19:16:33,Pedro,91.46
+45,Aprovar Pedido,2025-01-13 19:17:15,Pedro,73.24
+45,Finalizar,2025-01-13 20:41:15,Marina,35.77
+46,Receber Pedido,2025-01-07 10:10:00,Pedro,134.79
+46,Validar Dados,2025-01-08 08:18:29,Pedro,74.06
+46,Validar Dados,2025-01-08 10:13:03,Marina,86.92
+46,Validar Dados,2025-01-09 02:11:07,Pedro,92.86
+46,Validar Dados,2025-01-09 03:04:07,Marina,93.55
+46,Analisar Crédito,2025-01-09 05:48:12,Marina,102.34
+46,Finalizar,2025-01-11 01:48:12,Pedro,28.29
+47,Receber Pedido,2025-01-15 18:28:00,Marina,115.81
+47,Validar Dados,2025-01-15 20:03:08,Marina,79.6
+47,Analisar Crédito,2025-01-15 22:26:28,Marina,98.18
+47,Analisar Crédito,2025-01-16 12:30:49,Pedro,74.71
+47,Aprovar Pedido,2025-03-05 06:51:35,Pedro,71.31
+47,Finalizar,2025-03-05 09:50:35,Marina,48.68
+48,Receber Pedido,2025-01-25 14:36:00,Pedro,122.95
+48,Validar Dados,2025-01-25 15:18:00,Marina,87.13
+48,Validar Dados,2025-01-26 08:17:58,Pedro,80.47
+48,Validar Dados,2025-01-26 14:47:25,Pedro,74.83
+48,Analisar Crédito,2025-01-27 14:25:29,Pedro,106.91
+48,Aprovar Pedido,2025-01-30 11:08:22,Marina,73.9
+48,Finalizar,2025-02-02 07:08:22,Marina,41.01
+49,Receber Pedido,2025-01-14 14:15:00,Pedro,104.94
+49,Validar Dados,2025-01-14 23:08:56,Pedro,72.32
+49,Analisar Crédito,2025-01-15 02:08:37,Marina,82.22
+49,Finalizar,2025-01-15 04:35:37,Marina,44.81
+50,Receber Pedido,2025-01-11 09:01:00,Pedro,137.51
+50,Validar Dados,2025-01-11 10:15:11,Marina,96.21
+50,Validar Dados,2025-01-11 22:51:44,Pedro,85.55
+50,Analisar Crédito,2025-01-12 00:40:22,Marina,82.53
+50,Aprovar Pedido,2025-02-11 13:27:13,Pedro,60.87
+50,Finalizar,2025-02-11 16:51:13,Pedro,29.75
+51,Receber Pedido,2025-01-24 08:02:00,Marina,109.42
+51,Validar Dados,2025-01-24 09:06:50,Marina,72.96
+51,Validar Dados,2025-01-24 10:18:17,Marina,76.37
+51,Analisar Crédito,2025-01-24 12:39:37,Marina,97.01
+51,Aprovar Pedido,2025-01-26 01:56:06,Marina,53.2
+51,Finalizar,2025-01-26 06:22:06,Pedro,40.63
+52,Receber Pedido,2025-01-06 13:27:00,Marina,120.68
+52,Validar Dados,2025-01-06 20:44:44,Pedro,73.69
+52,Validar Dados,2025-01-06 21:26:27,Marina,89.07
+52,Validar Dados,2025-01-06 23:20:24,Marina,80.36
+52,Validar Dados,2025-01-07 11:42:39,Pedro,84.09
+52,Analisar Crédito,2025-01-08 16:50:19,Pedro,97.66
+52,Aprovar Pedido,2025-01-13 21:08:50,Marina,52.57
+52,Finalizar,2025-01-13 22:52:50,Pedro,43.57
+53,Receber Pedido,2025-01-26 08:30:00,Marina,114.45
+53,Validar Dados,2025-01-26 09:40:59,Marina,71.66
+53,Validar Dados,2025-01-26 10:42:02,Marina,77.74
+53,Analisar Crédito,2025-01-26 23:23:02,Pedro,90.04
+53,Revisar Documentação,2025-01-28 02:15:01,Pedro,84.95
+53,Aprovar Pedido,2025-02-02 05:44:36,Marina,61.71
+53,Finalizar,2025-02-02 10:29:36,Marina,47.25
+54,Receber Pedido,2025-01-30 08:36:00,Marina,98.38
+54,Validar Dados,2025-01-30 11:01:48,Marina,87.52
+54,Validar Dados,2025-01-30 20:22:48,Pedro,89.77
+54,Validar Dados,2025-01-30 22:59:28,Marina,74.13
+54,Analisar Crédito,2025-01-31 03:25:35,Marina,112.93
+54,Revisar Documentação,2025-01-31 11:10:31,Pedro,81.37
+54,Aprovar Pedido,2025-02-08 22:30:13,Pedro,56.34
+54,Finalizar,2025-02-09 01:08:13,Marina,32.62
+55,Receber Pedido,2025-01-23 10:36:00,Pedro,117.33
+55,Validar Dados,2025-01-23 12:03:34,Marina,67.2
+55,Validar Dados,2025-01-23 14:42:32,Marina,88.72
+55,Validar Dados,2025-01-23 21:24:34,Pedro,78.85
+55,Analisar Crédito,2025-01-24 00:27:41,Marina,97.6
+55,Aprovar Pedido,2025-02-04 14:24:18,Pedro,53.76
+55,Finalizar,2025-02-04 15:47:18,Marina,43.84
+56,Receber Pedido,2025-01-12 12:30:00,Marina,101.76
+56,Validar Dados,2025-01-12 16:35:32,Pedro,81.54
+56,Analisar Crédito,2025-01-14 01:10:39,Pedro,78.67
+56,Revisar Documentação,2025-01-14 17:50:47,Pedro,73.23
+56,Aprovar Pedido,2025-01-16 05:58:29,Marina,48.59
+56,Finalizar,2025-01-16 09:53:29,Marina,43.64
+57,Receber Pedido,2025-01-25 16:20:00,Marina,110.48
+57,Validar Dados,2025-01-25 16:59:09,Marina,89.96
+57,Analisar Crédito,2025-01-26 08:11:46,Pedro,102.28
+57,Aprovar Pedido,2025-02-13 11:11:27,Pedro,51.25
+57,Finalizar,2025-02-14 22:11:27,Pedro,54.41
+58,Receber Pedido,2025-01-20 19:12:00,Marina,119.66
+58,Validar Dados,2025-01-21 00:12:19,Pedro,90.23
+58,Analisar Crédito,2025-01-21 21:25:02,Pedro,91.1
+58,Aprovar Pedido,2025-03-12 21:13:42,Pedro,55.43
+58,Finalizar,2025-03-15 12:13:42,Pedro,43.44
+59,Receber Pedido,2025-01-11 13:16:00,Marina,120.89
+59,Validar Dados,2025-01-11 16:01:30,Marina,73.53
+59,Validar Dados,2025-01-12 02:06:09,Pedro,90.5
+59,Analisar Crédito,2025-01-12 03:50:12,Marina,83.58
+59,Aprovar Pedido,2025-03-01 02:10:31,Pedro,73.89
+59,Finalizar,2025-03-02 13:10:31,Marina,41.19
+60,Receber Pedido,2025-01-23 16:43:00,Marina,115.19
+60,Validar Dados,2025-01-23 22:08:09,Pedro,84.24
+60,Validar Dados,2025-01-24 20:17:25,Pedro,79.76
+60,Validar Dados,2025-01-25 05:19:59,Pedro,101.42
+60,Validar Dados,2025-01-25 20:06:59,Pedro,68.72
+60,Analisar Crédito,2025-01-25 22:21:13,Marina,96.77
+60,Aprovar Pedido,2025-02-06 17:53:11,Pedro,45.09
+60,Finalizar,2025-02-06 19:12:11,Marina,34.59
+61,Receber Pedido,2025-01-28 10:31:00,Pedro,158.9
+61,Validar Dados,2025-01-28 12:02:08,Marina,84.12
+61,Analisar Crédito,2025-01-28 23:52:15,Pedro,79.34
+61,Analisar Crédito,2025-01-29 01:30:59,Marina,73.64
+61,Aprovar Pedido,2025-01-30 01:53:43,Marina,73.26
+61,Finalizar,2025-01-30 03:06:43,Pedro,30.76
+62,Receber Pedido,2025-01-14 08:01:00,Pedro,119.62
+62,Validar Dados,2025-01-14 10:39:17,Marina,91.73
+62,Analisar Crédito,2025-01-15 16:52:44,Pedro,76.13
+62,Finalizar,2025-01-15 21:40:44,Pedro,41.92
+63,Receber Pedido,2025-01-05 15:28:00,Marina,96.66
+63,Validar Dados,2025-01-05 20:19:04,Pedro,77.28
+63,Analisar Crédito,2025-01-06 06:39:34,Pedro,116.28
+63,Aprovar Pedido,2025-01-21 21:12:34,Pedro,49.92
+63,Finalizar,2025-01-24 09:12:34,Pedro,43.02
+64,Receber Pedido,2025-01-17 16:16:00,Pedro,87.69
+64,Validar Dados,2025-01-17 23:55:15,Pedro,77.41
+64,Analisar Crédito,2025-01-18 01:29:30,Marina,87.64
+64,Aprovar Pedido,2025-01-20 10:45:34,Marina,60.63
+64,Finalizar,2025-01-23 03:45:34,Pedro,28.01
+65,Receber Pedido,2025-01-20 19:32:00,Pedro,96.83
+65,Validar Dados,2025-01-20 21:19:41,Marina,85.03
+65,Validar Dados,2025-01-21 09:42:48,Pedro,72.67
+65,Analisar Crédito,2025-01-22 03:09:31,Pedro,96.07
+65,Aprovar Pedido,2025-01-23 23:07:56,Marina,59.18
+65,Finalizar,2025-01-24 00:32:56,Pedro,39.84
+66,Receber Pedido,2025-01-08 13:02:00,Pedro,136.58
+66,Validar Dados,2025-01-08 15:30:53,Marina,91.87
+66,Analisar Crédito,2025-01-09 15:48:36,Pedro,102.06
+66,Aprovar Pedido,2025-02-09 05:16:21,Pedro,57.98
+66,Finalizar,2025-02-09 07:57:21,Pedro,47.14
+67,Receber Pedido,2025-01-06 16:01:00,Pedro,101.59
+67,Validar Dados,2025-01-06 22:37:48,Pedro,65.31
+67,Validar Dados,2025-01-06 23:59:54,Marina,71.01
+67,Analisar Crédito,2025-01-08 02:28:23,Pedro,65.77
+67,Aprovar Pedido,2025-01-10 19:22:54,Marina,68.57
+67,Finalizar,2025-01-10 23:59:54,Marina,32.87
+68,Receber Pedido,2025-01-14 08:02:00,Pedro,124.68
+68,Validar Dados,2025-01-14 22:15:48,Pedro,66.1
+68,Validar Dados,2025-01-15 00:18:20,Marina,63.55
+68,Validar Dados,2025-01-15 02:08:55,Marina,86.8
+68,Validar Dados,2025-01-15 23:45:05,Pedro,85.75
+68,Analisar Crédito,2025-01-16 05:12:30,Marina,99.11
+68,Finalizar,2025-01-18 01:12:30,Marina,41.69
+69,Receber Pedido,2025-01-13 15:49:00,Marina,125.86
+69,Validar Dados,2025-01-13 17:29:05,Marina,68.9
+69,Validar Dados,2025-01-13 19:32:54,Marina,71.71
+69,Analisar Crédito,2025-01-13 23:19:05,Marina,91.96
+69,Aprovar Pedido,2025-02-10 20:22:15,Pedro,62.63
+69,Finalizar,2025-02-13 13:22:15,Marina,42.37
+70,Receber Pedido,2025-01-29 12:57:00,Pedro,107.66
+70,Validar Dados,2025-01-30 02:15:51,Pedro,78.5
+70,Validar Dados,2025-01-30 04:54:01,Marina,105.46
+70,Validar Dados,2025-01-30 14:49:51,Pedro,84.13
+70,Analisar Crédito,2025-01-31 07:11:28,Pedro,86.7
+70,Aprovar Pedido,2025-02-10 07:44:24,Pedro,66.01
+70,Finalizar,2025-02-10 11:30:24,Marina,35.96
+71,Receber Pedido,2025-01-04 15:18:00,Marina,124.18
+71,Validar Dados,2025-01-04 17:14:02,Marina,104.68
+71,Analisar Crédito,2025-01-04 18:58:13,Marina,67.29
+71,Aprovar Pedido,2025-01-26 01:58:16,Pedro,55.62
+71,Finalizar,2025-01-28 11:58:16,Marina,40.98
+72,Receber Pedido,2025-01-07 17:56:00,Marina,91.98
+72,Validar Dados,2025-01-07 23:48:09,Pedro,60.26
+72,Validar Dados,2025-01-08 00:35:17,Marina,63.51
+72,Analisar Crédito,2025-01-08 03:43:53,Marina,102.55
+72,Analisar Crédito,2025-01-08 05:20:31,Marina,83.02
+72,Aprovar Pedido,2025-01-23 08:40:53,Pedro,51.88
+72,Finalizar,2025-01-23 12:47:53,Marina,36.27
+73,Receber Pedido,2025-01-21 11:49:00,Pedro,130.52
+73,Validar Dados,2025-01-22 01:38:17,Pedro,92.28
+73,Validar Dados,2025-01-22 08:36:48,Pedro,67.9
+73,Analisar Crédito,2025-01-24 02:15:29,Pedro,81.54
+73,Finalizar,2025-01-26 08:15:29,Pedro,39.67
+74,Receber Pedido,2025-01-15 13:10:00,Marina,118.33
+74,Validar Dados,2025-01-15 19:27:17,Pedro,70.96
+74,Validar Dados,2025-01-16 02:42:20,Pedro,69.08
+74,Analisar Crédito,2025-01-17 17:30:07,Pedro,86.2
+74,Analisar Crédito,2025-01-17 19:36:58,Marina,87.16
+74,Aprovar Pedido,2025-02-09 18:05:20,Pedro,56.83
+74,Finalizar,2025-02-11 07:05:20,Pedro,38.26
+75,Receber Pedido,2025-01-13 17:37:00,Marina,113.88
+75,Validar Dados,2025-01-13 21:14:22,Pedro,71.52
+75,Analisar Crédito,2025-01-15 00:40:13,Pedro,70.79
+75,Revisar Documentação,2025-01-15 03:13:12,Marina,70.82
+75,Aprovar Pedido,2025-03-24 00:20:42,Pedro,59.21
+75,Finalizar,2025-03-25 06:20:42,Marina,36.96
+76,Receber Pedido,2025-01-21 19:14:00,Pedro,116.45
+76,Validar Dados,2025-01-22 04:42:46,Pedro,87.12
+76,Validar Dados,2025-01-23 02:28:10,Pedro,81.2
+76,Analisar Crédito,2025-01-23 06:28:43,Marina,106.68
+76,Revisar Documentação,2025-01-23 09:31:07,Marina,75.58
+76,Aprovar Pedido,2025-01-29 19:12:05,Marina,67.61
+76,Finalizar,2025-01-29 23:04:05,Marina,19.67
+77,Receber Pedido,2025-01-28 08:11:00,Pedro,92.96
+77,Validar Dados,2025-01-28 10:27:19,Marina,73.53
+77,Validar Dados,2025-01-28 12:28:06,Marina,85.4
+77,Analisar Crédito,2025-01-28 13:14:06,Marina,74.61
+77,Aprovar Pedido,2025-02-03 22:01:51,Pedro,65.17
+77,Finalizar,2025-02-04 02:35:51,Pedro,48.25
+78,Receber Pedido,2025-01-19 09:38:00,Pedro,109.36
+78,Validar Dados,2025-01-19 23:45:34,Pedro,88.54
+78,Analisar Crédito,2025-01-20 19:35:28,Pedro,81.21
+78,Revisar Documentação,2025-01-20 22:54:02,Marina,62.98
+78,Aprovar Pedido,2025-01-24 22:19:56,Marina,73.72
+78,Finalizar,2025-01-25 01:53:56,Pedro,33.64
+79,Receber Pedido,2025-01-28 16:45:00,Pedro,126.27
+79,Validar Dados,2025-01-28 17:34:56,Marina,78.98
+79,Analisar Crédito,2025-01-29 01:16:18,Pedro,78.08
+79,Aprovar Pedido,2025-03-14 22:40:56,Pedro,64.64
+79,Finalizar,2025-03-17 05:40:56,Marina,34.04
+80,Receber Pedido,2025-01-28 14:34:00,Pedro,119.54
+80,Validar Dados,2025-01-28 21:26:57,Pedro,87.32
+80,Validar Dados,2025-01-29 11:37:55,Pedro,67.62
+80,Validar Dados,2025-01-29 23:43:44,Pedro,84.95
+80,Analisar Crédito,2025-01-30 00:41:31,Marina,88.6
+80,Aprovar Pedido,2025-02-23 17:26:25,Pedro,59.29
+80,Finalizar,2025-02-23 18:59:25,Marina,45.53
+81,Receber Pedido,2025-01-08 11:19:00,Pedro,118.14
+81,Validar Dados,2025-01-08 21:02:54,Pedro,89.76
+81,Validar Dados,2025-01-09 10:15:07,Pedro,87.93
+81,Validar Dados,2025-01-09 12:18:50,Marina,92.28
+81,Analisar Crédito,2025-01-10 05:50:08,Pedro,80.77
+81,Finalizar,2025-01-10 07:17:08,Pedro,26.37
+82,Receber Pedido,2025-01-19 16:10:00,Pedro,138.83
+82,Validar Dados,2025-01-19 18:02:19,Marina,81.88
+82,Analisar Crédito,2025-01-20 07:05:49,Pedro,97.29
+82,Aprovar Pedido,2025-01-23 19:04:29,Marina,70.49
+82,Finalizar,2025-01-23 21:48:29,Marina,42.74
+83,Receber Pedido,2025-01-30 14:09:00,Pedro,152.48
+83,Validar Dados,2025-01-30 14:46:22,Marina,94.56
+83,Analisar Crédito,2025-01-30 16:25:46,Marina,111.59
+83,Revisar Documentação,2025-01-31 03:30:31,Pedro,64.05
+83,Aprovar Pedido,2025-02-05 15:29:56,Marina,49.75
+83,Finalizar,2025-02-05 19:06:56,Pedro,41.26
+84,Receber Pedido,2025-01-19 19:25:00,Marina,127.69
+84,Validar Dados,2025-01-19 22:29:06,Marina,78.33
+84,Validar Dados,2025-01-20 18:57:28,Pedro,82.83
+84,Validar Dados,2025-01-22 09:27:08,Pedro,88.89
+84,Validar Dados,2025-01-22 23:44:20,Pedro,87.34
+84,Analisar Crédito,2025-01-23 08:10:47,Marina,88.87
+84,Aprovar Pedido,2025-02-15 03:04:28,Pedro,59.31
+84,Finalizar,2025-02-15 04:25:28,Pedro,53.8
+85,Receber Pedido,2025-01-24 16:34:00,Pedro,136.13
+85,Validar Dados,2025-01-25 08:17:27,Pedro,90.02
+85,Validar Dados,2025-01-25 14:14:00,Pedro,82.05
+85,Analisar Crédito,2025-01-25 18:29:42,Pedro,96.47
+85,Aprovar Pedido,2025-03-10 21:32:49,Pedro,62.73
+85,Finalizar,2025-03-10 22:41:49,Marina,44.56
+86,Receber Pedido,2025-01-27 09:05:00,Pedro,128.76
+86,Validar Dados,2025-01-27 10:23:05,Marina,82.31
+86,Validar Dados,2025-01-27 11:40:16,Marina,82.36
+86,Analisar Crédito,2025-01-28 04:51:33,Pedro,79.35
+86,Aprovar Pedido,2025-02-06 14:23:48,Marina,56.5
+86,Finalizar,2025-02-06 17:34:48,Marina,43.53
+87,Receber Pedido,2025-01-03 10:33:00,Marina,125.08
+87,Validar Dados,2025-01-03 11:58:00,Marina,75.84
+87,Analisar Crédito,2025-01-03 13:49:28,Marina,75.83
+87,Aprovar Pedido,2025-01-07 17:01:51,Marina,59.84
+87,Finalizar,2025-01-07 20:27:51,Marina,36.0
+88,Receber Pedido,2025-01-28 08:59:00,Marina,105.11
+88,Validar Dados,2025-01-28 11:48:40,Marina,83.86
+88,Validar Dados,2025-01-28 13:35:52,Marina,80.82
+88,Analisar Crédito,2025-01-29 03:37:10,Pedro,105.68
+88,Aprovar Pedido,2025-01-31 01:11:37,Marina,51.81
+88,Finalizar,2025-01-31 06:10:37,Marina,51.12
+89,Receber Pedido,2025-01-15 14:38:00,Pedro,114.42
+89,Validar Dados,2025-01-16 09:42:02,Pedro,90.89
+89,Validar Dados,2025-01-16 16:50:51,Pedro,81.41
+89,Analisar Crédito,2025-01-16 20:02:59,Marina,68.78
+89,Aprovar Pedido,2025-01-20 04:54:12,Marina,64.11
+89,Finalizar,2025-01-20 05:58:12,Marina,36.8
+90,Receber Pedido,2025-01-04 17:41:00,Pedro,121.5
+90,Validar Dados,2025-01-04 18:54:24,Marina,81.46
+90,Analisar Crédito,2025-01-04 20:13:51,Marina,89.36
+90,Revisar Documentação,2025-01-05 12:36:30,Pedro,78.13
+90,Aprovar Pedido,2025-01-14 12:18:58,Pedro,53.28
+90,Finalizar,2025-01-14 15:03:58,Pedro,34.46
+91,Receber Pedido,2025-01-25 11:24:00,Marina,122.61
+91,Validar Dados,2025-01-25 13:28:25,Marina,78.31
+91,Analisar Crédito,2025-01-25 15:32:45,Marina,87.97
+91,Aprovar Pedido,2025-01-31 17:14:18,Marina,60.89
+91,Finalizar,2025-01-31 20:42:18,Pedro,39.34
+92,Receber Pedido,2025-01-14 13:12:00,Marina,110.94
+92,Validar Dados,2025-01-14 14:05:10,Marina,82.94
+92,Validar Dados,2025-01-15 00:02:08,Pedro,66.43
+92,Validar Dados,2025-01-15 10:02:25,Pedro,71.92
+92,Validar Dados,2025-01-15 13:48:10,Pedro,76.85
+92,Analisar Crédito,2025-01-15 16:11:17,Marina,102.21
+92,Revisar Documentação,2025-01-17 05:12:47,Pedro,96.63
+92,Aprovar Pedido,2025-01-19 13:34:33,Marina,49.3
+92,Finalizar,2025-01-19 15:47:33,Pedro,43.31
+93,Receber Pedido,2025-01-21 16:36:00,Pedro,126.55
+93,Validar Dados,2025-01-21 18:13:34,Marina,89.04
+93,Analisar Crédito,2025-01-22 04:49:53,Pedro,86.37
+93,Aprovar Pedido,2025-02-10 05:13:36,Pedro,53.48
+93,Finalizar,2025-02-10 06:32:36,Pedro,49.5
+94,Receber Pedido,2025-01-20 11:33:00,Marina,124.12
+94,Validar Dados,2025-01-21 15:48:00,Pedro,76.4
+94,Analisar Crédito,2025-01-21 19:37:32,Marina,96.14
+94,Aprovar Pedido,2025-02-22 23:03:00,Pedro,60.67
+94,Finalizar,2025-02-23 00:08:00,Pedro,45.29
+95,Receber Pedido,2025-01-07 15:15:00,Pedro,107.8
+95,Validar Dados,2025-01-07 20:35:45,Pedro,77.95
+95,Analisar Crédito,2025-01-08 13:39:44,Pedro,112.48
+95,Aprovar Pedido,2025-02-24 20:33:02,Pedro,68.64
+95,Finalizar,2025-02-24 22:32:02,Marina,45.9
+96,Receber Pedido,2025-01-07 14:26:00,Marina,129.85
+96,Validar Dados,2025-01-07 23:57:29,Pedro,76.65
+96,Validar Dados,2025-01-08 09:29:17,Pedro,75.96
+96,Validar Dados,2025-01-08 11:55:33,Marina,78.0
+96,Analisar Crédito,2025-01-08 21:35:09,Pedro,76.04
+96,Revisar Documentação,2025-01-09 16:55:25,Pedro,69.91
+96,Aprovar Pedido,2025-01-20 00:02:42,Pedro,62.42
+96,Finalizar,2025-01-20 04:44:42,Marina,34.83
+97,Receber Pedido,2025-01-05 16:56:00,Pedro,125.45
+97,Validar Dados,2025-01-06 06:20:23,Pedro,81.94
+97,Analisar Crédito,2025-01-06 10:23:31,Marina,85.76
+97,Revisar Documentação,2025-01-07 04:13:12,Pedro,72.77
+97,Aprovar Pedido,2025-01-12 06:29:36,Marina,65.86
+97,Finalizar,2025-01-12 07:58:36,Pedro,43.27
+98,Receber Pedido,2025-01-24 11:37:00,Pedro,107.4
+98,Validar Dados,2025-01-24 21:19:13,Pedro,72.16
+98,Analisar Crédito,2025-01-25 11:45:07,Pedro,97.3
+98,Aprovar Pedido,2025-03-07 04:37:07,Pedro,52.77
+98,Finalizar,2025-03-07 06:42:07,Marina,41.95
+99,Receber Pedido,2025-01-03 12:07:00,Marina,124.25
+99,Validar Dados,2025-01-03 13:45:31,Marina,77.41
+99,Analisar Crédito,2025-01-03 16:11:20,Marina,66.77
+99,Aprovar Pedido,2025-01-19 20:04:00,Pedro,61.01
+99,Finalizar,2025-01-20 00:51:00,Pedro,42.1
+100,Receber Pedido,2025-01-03 11:26:00,Marina,127.34
+100,Validar Dados,2025-01-03 22:40:02,Pedro,76.21
+100,Validar Dados,2025-01-04 05:34:19,Pedro,68.61
+100,Validar Dados,2025-01-04 13:50:27,Pedro,77.62
+100,Analisar Crédito,2025-01-04 15:33:48,Marina,77.84
+100,Aprovar Pedido,2025-01-13 04:40:23,Marina,56.52
+100,Finalizar,2025-01-13 08:29:23,Pedro,44.5

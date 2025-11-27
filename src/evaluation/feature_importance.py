@@ -10,7 +10,7 @@ from lightgbm import LGBMClassifier
 def plot_feature_importance(
     model: LGBMClassifier,
     feature_names: List[str],
-    max_features: int | None = None,
+    max_features: int | None = 15,
     figsize: Tuple[int, int] = (10, 6),
 ) -> None:
     """

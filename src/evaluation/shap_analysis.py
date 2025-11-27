@@ -7,6 +7,23 @@ import numpy as np
 import shap
 from lightgbm import LGBMClassifier
 from pandas import DataFrame
+from scipy.sparse import issparse
+
+
+def _to_dense(X: np.ndarray) -> np.ndarray:
+    """Converte matriz potencialmente esparsa em densa para uso no pandas/SHAP."""
+    return X.toarray() if issparse(X) else np.asarray(X)
+
+
+def _select_shap_values(
+    shap_values: Any, positive_class_index: int
+) -> np.ndarray:
+    """Seleciona a classe positiva (se lista) e garante formato denso."""
+    if isinstance(shap_values, list):
+        values = shap_values[positive_class_index]
+    else:
+        values = shap_values
+    return _to_dense(values)
 
 
 def compute_shap_values(
@@ -37,12 +54,9 @@ def plot_shap_summary(
     """
     shap.initjs()
 
-    if isinstance(shap_values, list):
-        shap_values_pos = shap_values[positive_class_index]
-    else:
-        shap_values_pos = shap_values
-
-    X_df = DataFrame(X_pre, columns=feature_names)
+    shap_values_pos = _select_shap_values(shap_values, positive_class_index)
+    X_dense = _to_dense(X_pre)
+    X_df = DataFrame(X_dense, columns=feature_names)
 
     plt.figure(figsize=(10, 6))
     shap.summary_plot(shap_values_pos, X_df, show=False)
@@ -89,6 +103,7 @@ def plot_shap_force_single(
     """
     Plota explicação local SHAP (force_plot) para um único exemplo.
     """
+    shap_values_pos = _select_shap_values(shap_values, positive_class_index)
     if isinstance(shap_values, list):
         shap_values_pos = shap_values[positive_class_index]
     elif len(shap_values.shape) == 3:
@@ -104,7 +119,8 @@ def plot_shap_force_single(
     else:
         expected_value = 0
 
-    X_df = DataFrame(X_pre, columns=feature_names)
+    X_dense = _to_dense(X_pre)
+    X_df = DataFrame(X_dense, columns=feature_names)
 
     shap.force_plot(
         base_value=expected_value,
