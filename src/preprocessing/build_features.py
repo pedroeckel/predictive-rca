@@ -9,11 +9,10 @@ import pandas as pd
 def build_case_features(
     df_events: pd.DataFrame,
     sla_hours: float,
-    case_id_col: str = "case_id",
-    activity_col: str = "activity",
+    case_id_col: str = "id_caso",
+    activity_col: str = "atividade",
     timestamp_col: str = "timestamp",
-    resource_col: str | None = "resource",
-    cost_col: str | None = "cost",
+    resource_col: str | None = "recurso",
 ) -> pd.DataFrame:
     """
     Constrói features em nível de caso a partir de um log de eventos.
@@ -78,17 +77,6 @@ def build_case_features(
             name="start_resource",
         )
 
-    if cost_col is not None and cost_col in df.columns:
-        mean_cost = (
-            df.groupby(case_id_col)[cost_col].mean().rename("mean_cost")
-        )
-    else:
-        mean_cost = pd.Series(
-            index=df[case_id_col].unique(),
-            dtype="float",
-            name="mean_cost",
-        )
-
     features = pd.concat(
         [
             agg_time[["throughput_hours"]],
@@ -98,7 +86,6 @@ def build_case_features(
             first_activity,
             last_activity,
             first_resource,
-            mean_cost,
         ],
         axis=1,
     )
@@ -107,6 +94,6 @@ def build_case_features(
         features["throughput_hours"] > sla_hours
     ).astype(int)
 
-    features = features.reset_index().rename(columns={case_id_col: "case_id"})
+    features = features.reset_index().rename(columns={case_id_col: "id_caso"})
 
     return features
