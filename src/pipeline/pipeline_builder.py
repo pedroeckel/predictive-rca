@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict, Tuple, Type
+from typing import Dict, Iterable, Tuple, Type
 
 import numpy as np
 import pandas as pd
@@ -8,7 +8,7 @@ from lightgbm import LGBMClassifier
 from sklearn.metrics import log_loss
 
 from src.config.settings import CONFIG
-from src.preprocessing.build_features import build_case_features
+from src.preprocessing.build_features import TargetBuilder, build_case_features
 from src.preprocessing.split import (
     DatasetSplits,
     stratified_case_split,
@@ -125,6 +125,11 @@ class PipelineBuilder:
         self,
         log_path: str,
         sla_hours: float | None = None,
+        target_builders: Iterable[TargetBuilder] | None = None,
+        include_default_target: bool = True,
+        target_col: str = "sla_violated",
+        throughput_col: str = "throughput_hours",
+        feature_importance_top_k: int | None = 15,
     ):
         if sla_hours is None:
             sla_hours = CONFIG.SLA_HOURS
@@ -133,12 +138,19 @@ class PipelineBuilder:
         df_events = self._load_event_log(log_path)
 
         self.logger.info("Construindo features em nível de caso...")
-        df_cases = build_case_features(df_events, sla_hours=sla_hours)
+        df_cases = build_case_features(
+            df_events,
+            sla_hours=sla_hours,
+            target_builders=target_builders,
+            include_default_target=include_default_target,
+            default_target_name=target_col,
+            throughput_col=throughput_col,
+        )
 
         self.logger.info("Realizando split estratificado...")
         splits, numeric_features, categorical_features = stratified_case_split(
             df_cases,
-            target_col="sla_violated",
+            target_col=target_col,
             id_col="case_id",
             random_state=CONFIG.RANDOM_STATE,
         )
@@ -221,7 +233,11 @@ class PipelineBuilder:
         # ---------------------------------------------------------
         if hasattr(model, "model") and hasattr(model.model, "feature_importances_"):
             self.logger.info("Plotando feature importance...")
-            plot_feature_importance(model.model, artifacts.feature_names)
+            plot_feature_importance(
+                model.model,
+                artifacts.feature_names,
+                max_features=feature_importance_top_k,
+            )
 
         if hasattr(model, "model"):
             self.logger.info("Computando SHAP values...")
