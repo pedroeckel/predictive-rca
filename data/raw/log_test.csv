@@ -1,0 +1,66 @@
+id_caso,atividade,timestamp,recurso
+C1,Registrar Pedido,2023-01-01 09:00:00,João
+C1,Aprovar Pedido,2023-01-01 11:30:00,Maria
+C1,Enviar Produto,2023-01-02 14:15:00,Carlos
+C1,Faturar,2023-01-03 10:00:00,Ana
+C2,Registrar Pedido,2023-01-01 10:30:00,João
+C2,Rejeitar Pedido,2023-01-01 16:45:00,Pedro
+C3,Registrar Pedido,2023-01-02 08:15:00,Maria
+C3,Aprovar Pedido,2023-01-02 11:00:00,Pedro
+C3,Enviar Produto,2023-01-03 09:30:00,Carlos
+C4,Registrar Pedido,2023-01-02 14:20:00,Ana
+C4,Aprovar Pedido,2023-01-03 10:15:00,João
+C4,Enviar Produto,2023-01-04 15:30:00,Carlos
+C4,Faturar,2023-01-05 11:45:00,Maria
+C5,Registrar Pedido,2023-01-03 08:45:00,Pedro
+C5,Analisar Crédito,2023-01-03 14:20:00,Ana
+C5,Aprovar Pedido,2023-01-04 09:30:00,João
+C5,Enviar Produto,2023-01-05 16:00:00,Carlos
+C6,Registrar Pedido,2023-01-03 11:10:00,Maria
+C6,Rejeitar Pedido,2023-01-03 17:30:00,Pedro
+C7,Registrar Pedido,2023-01-04 13:25:00,João
+C7,Aprovar Pedido,2023-01-05 10:40:00,Ana
+C7,Enviar Produto,2023-01-06 14:15:00,Carlos
+C8,Registrar Pedido,2023-01-05 09:30:00,Pedro
+C8,Analisar Crédito,2023-01-05 15:20:00,Maria
+C8,Aprovar Pedido,2023-01-06 11:10:00,João
+C8,Enviar Produto,2023-01-07 13:45:00,Carlos
+C8,Faturar,2023-01-08 10:20:00,Ana
+C9,Registrar Pedido,2023-01-06 08:15:00,Ana
+C9,Rejeitar Pedido,2023-01-06 12:45:00,Pedro
+C10,Registrar Pedido,2023-01-07 14:30:00,João
+C10,Aprovar Pedido,2023-01-08 09:15:00,Maria
+C10,Enviar Produto,2023-01-09 16:30:00,Carlos
+C11,Registrar Pedido,2023-01-08 10:45:00,Pedro
+C11,Analisar Crédito,2023-01-08 16:20:00,Ana
+C11,Aprovar Pedido,2023-01-09 11:30:00,João
+C11,Enviar Produto,2023-01-10 14:45:00,Carlos
+C12,Registrar Pedido,2023-01-09 13:15:00,Maria
+C12,Rejeitar Pedido,2023-01-09 18:20:00,Pedro
+C13,Registrar Pedido,2023-01-10 08:30:00,João
+C13,Aprovar Pedido,2023-01-10 12:45:00,Ana
+C13,Enviar Produto,2023-01-11 15:15:00,Carlos
+C13,Faturar,2023-01-12 11:30:00,Maria
+C14,Registrar Pedido,2023-01-11 09:45:00,Pedro
+C14,Analisar Crédito,2023-01-11 14:30:00,João
+C14,Aprovar Pedido,2023-01-12 10:15:00,Ana
+C14,Enviar Produto,2023-01-13 13:20:00,Carlos
+C15,Registrar Pedido,2023-01-12 11:20:00,Maria
+C15,Rejeitar Pedido,2023-01-12 16:45:00,Pedro
+C16,Registrar Pedido,2023-01-13 14:10:00,João
+C16,Aprovar Pedido,2023-01-14 09:25:00,Ana
+C16,Enviar Produto,2023-01-15 12:40:00,Carlos
+C17,Registrar Pedido,2023-01-14 10:35:00,Pedro
+C17,Analisar Crédito,2023-01-14 15:50:00,Maria
+C17,Aprovar Pedido,2023-01-15 11:05:00,João
+C17,Enviar Produto,2023-01-16 14:30:00,Carlos
+C17,Faturar,2023-01-17 10:15:00,Ana
+C18,Registrar Pedido,2023-01-15 12:25:00,Maria
+C18,Rejeitar Pedido,2023-01-15 17:40:00,Pedro
+C19,Registrar Pedido,2023-01-16 08:50:00,João
+C19,Aprovar Pedido,2023-01-16 13:15:00,Ana
+C19,Enviar Produto,2023-01-17 16:20:00,Carlos
+C20,Registrar Pedido,2023-01-17 09:40:00,Pedro
+C20,Analisar Crédito,2023-01-17 14:55:00,Maria
+C20,Aprovar Pedido,2023-01-18 10:10:00,João
+C20,Enviar Produto,2023-01-19 13:35:00,Carlos

@@ -27,13 +27,18 @@ def _select_shap_values(
 
 
 def compute_shap_values(
-    model: LGBMClassifier,
+    model: Any,
     X_pre: np.ndarray,
-) -> Tuple[shap.TreeExplainer, Any]:
+) -> Tuple[Any, Any]:
     """
     Computa valores SHAP usando TreeExplainer.
     """
-    explainer = shap.TreeExplainer(model)
+    model_type = type(model).__name__
+    if 'LogisticRegression' in model_type:
+        explainer = shap.LinearExplainer(model, X_pre)
+    else:
+        explainer = shap.TreeExplainer(model)
+
     shap_values = explainer.shap_values(X_pre)
     return explainer, shap_values
 
@@ -68,22 +73,27 @@ def plot_shap_dependence_top_feature(
     """
     Plota SHAP dependence plot para a feature mais importante.
     """
-    shap_values_pos = _select_shap_values(shap_values, positive_class_index)
-    X_dense = _to_dense(X_pre)
-    X_df = DataFrame(X_dense, columns=feature_names)
+    if isinstance(shap_values, list):
+        shap_values_pos = shap_values[positive_class_index]
+    elif len(shap_values.shape) == 3:
+        shap_values_pos = shap_values[:, :, positive_class_index]
+    else:
+        shap_values_pos = shap_values
+
+    X_df = DataFrame(X_pre, columns=feature_names)
 
     importances = np.mean(np.abs(shap_values_pos), axis=0)
     top_idx = int(np.argmax(importances))
     feat = feature_names[top_idx]
 
     plt.figure(figsize=(8, 5))
-    shap.dependence_plot(feat, shap_values_pos, X_df, show=False)
+    shap.dependence_plot(top_idx, shap_values_pos, X_df, show=False)
     plt.tight_layout()
     plt.show()
 
 
 def plot_shap_force_single(
-    explainer: shap.TreeExplainer,
+    explainer: Any,
     shap_values: Any,
     X_pre: np.ndarray,
     feature_names: List[str],
@@ -95,15 +105,29 @@ def plot_shap_force_single(
     """
     shap_values_pos = _select_shap_values(shap_values, positive_class_index)
     if isinstance(shap_values, list):
-        expected_value = explainer.expected_value[positive_class_index]
+        shap_values_pos = shap_values[positive_class_index]
+    elif len(shap_values.shape) == 3:
+        shap_values_pos = shap_values[:, :, positive_class_index]
     else:
-        expected_value = explainer.expected_value
+        shap_values_pos = shap_values
+
+    if hasattr(explainer, 'expected_value'):
+        if isinstance(explainer.expected_value, (list, np.ndarray)):
+            expected_value = explainer.expected_value[positive_class_index]
+        else:
+            expected_value = explainer.expected_value
+    else:
+        expected_value = 0
 
     X_dense = _to_dense(X_pre)
     X_df = DataFrame(X_dense, columns=feature_names)
 
     shap.force_plot(
-        expected_value,
-        shap_values_pos[index, :],
-        X_df.iloc[index, :],
+        base_value=expected_value,
+        shap_values=shap_values_pos[index, :],
+        features=X_df.iloc[index, :],
+        feature_names=feature_names,
+        matplotlib=True,
+        show=False
     )
+
