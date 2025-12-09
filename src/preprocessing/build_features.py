@@ -54,8 +54,8 @@ def _apply_target_builders(
 def build_case_features(
     df_events: pd.DataFrame,
     sla_hours: float,
-    case_id_col: str = "case_id",
-    activity_col: str = "activity",
+    case_id_col: str = "id_caso",
+    activity_col: str = "atividade",
     timestamp_col: str = "timestamp",
     resource_col: str | None = "resource",
     cost_col: str | None = "cost",
@@ -156,7 +156,6 @@ def build_case_features(
             first_activity,
             last_activity,
             first_resource,
-            mean_cost,
         ],
         axis=1,
     )
@@ -174,6 +173,6 @@ def build_case_features(
 
     features = _apply_target_builders(features, builders)
 
-    features = features.reset_index().rename(columns={case_id_col: "case_id"})
+    features = features.reset_index().rename(columns={case_id_col: "id_caso"})
 
     return features
