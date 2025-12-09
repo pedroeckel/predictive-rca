@@ -177,55 +177,18 @@ def add_lead_time(
     return df
 
 
-def activity_frequency(
+def calculate_frequency(
     df: pd.DataFrame,
-    activity_col: str = 'atividade'
+    column: str
 ) -> pd.DataFrame:
     
-    freq = df[activity_col].value_counts()
+    freq = df[column].value_counts()
     result = pd.DataFrame({
-        'Atividade': freq.index,
-        'Quantidade': freq.values,
+        column: freq.index,
+        'quantidade': freq.values,
     })
     return result
 
-
-def transition_frequency(
-    df: pd.DataFrame,
-    transition_col: str = 'transicao'
-) -> pd.DataFrame:
-    
-    freq = df[transition_col].dropna().value_counts()
-    result = pd.DataFrame({
-        'Transição': freq.index,
-        'Quantidade': freq.values,
-    })
-    return result
-
-def resource_frequency(
-    df: pd.DataFrame,
-    resource_col: str = 'recurso'
-) -> pd.DataFrame:
-
-    freq = df[resource_col].value_counts()
-    result = pd.DataFrame({
-        'Recurso': freq.index,
-        'Quantidade': freq.values,
-    })
-    return result
-
-
-def trace_frequency(
-    df: pd.DataFrame,
-    trace_col: str = 'trace'
-) -> pd.DataFrame:
-    
-    freq = df[trace_col].value_counts()
-    result = pd.DataFrame({
-        'Trace': freq.index,
-        'Quantidade': freq.values,
-    })
-    return result
 
 def final_trace_frequency(
     df: pd.DataFrame,
@@ -235,23 +198,11 @@ def final_trace_frequency(
     
     final_traces = df.groupby(case_id_col)[trace_col].last().value_counts()
     result = pd.DataFrame({
-        'Trace final': final_traces.index,
-        'Quantidade': final_traces.values,
+        'trace final': final_traces.index,
+        'quantidade': final_traces.values,
     })
     return result
 
-
-def gpm_line_frequency(
-    df: pd.DataFrame, 
-    gpm_col: str = 'gpm_nota'
-) -> pd.DataFrame:
-
-    freq = df[gpm_col].value_counts()
-    result = pd.DataFrame({
-        'GPM': freq.index,
-        'Quantidade': freq.values
-    })
-    return result
     
 
 def gpm_case_frequency(
@@ -266,21 +217,9 @@ def gpm_case_frequency(
     
     freq = gpm_by_case.value_counts()
     return pd.DataFrame({
-        'GPM': freq.index,
-        'Cases': freq.values
+        'gpm_nota': freq.index,
+        'casos': freq.values
     })
-
-def priority_line_frequency(
-    df: pd.DataFrame, 
-    priority_col: str = 'prioridade_nota'
-) -> pd.DataFrame:
-
-    freq = df[priority_col].value_counts()
-    result = pd.DataFrame({
-        'Prioridade': freq.index,
-        'Quantidade': freq.values
-    })
-    return result
 
 
 def priority_case_frequency(
@@ -295,22 +234,9 @@ def priority_case_frequency(
     
     freq = priority_by_case.value_counts()
     return pd.DataFrame({
-        'Prioridade': freq.index,
-        'Casos': freq.values
+        'prioridade_nota': freq.index,
+        'casos': freq.values
     })
-
-
-def intervention_line_frequency(
-    df: pd.DataFrame, 
-    intervention_col: str = 'tipo_intervencao_nota'
-) -> pd.DataFrame:
-
-    freq = df[intervention_col].value_counts()
-    result = pd.DataFrame({
-        'Tipo intervenção': freq.index,
-        'Quantidade': freq.values
-    })
-    return result
 
 
 def intervention_case_frequency(
@@ -325,21 +251,8 @@ def intervention_case_frequency(
     
     freq = intervention_by_case.value_counts()
     result = pd.DataFrame({
-        'Tipo intervenção': freq.index,
-        'Casos': freq.values
-    })
-    return result
-
-
-def purpose_line_frequency(
-    df: pd.DataFrame, 
-    purpose_col: str = 'cod_finalidade_nota'
-) -> pd.DataFrame:
-
-    freq = df[purpose_col].value_counts()
-    result = pd.DataFrame({
-        'Código finalidade': freq.index,
-        'Quantidade': freq.values
+        'tipo_intervencao_nota': freq.index,
+        'casos': freq.values
     })
     return result
 
@@ -356,8 +269,8 @@ def purpose_case_frequency(
     
     freq = purpose_by_case.value_counts()
     result = pd.DataFrame({
-        'Código finalidade': freq.index,
-        'Casos': freq.values
+        'cod_finalidade_nota': freq.index,
+        'casos': freq.values
     })
     return result
 
@@ -391,7 +304,7 @@ def get_traces_with_highest_lead_time(
         .reset_index(drop=True)
     )
     
-    result.columns = ['Trace final', 'Lead time (dias)']
+    result.columns = ['trace final', 'lead time (dias)']
     return result
 
 
@@ -411,7 +324,7 @@ def get_transitions_with_highest_time(
         .reset_index(drop=True)
     )
     
-    result.columns = ['Transição', 'Tempo entre atividades (dias)']
+    result.columns = ['transição', 'tempo entre atividades (dias)']
     return result
 
 
@@ -432,15 +345,15 @@ def pipeline(df: pd.DataFrame) -> pd.DataFrame:
     df_final = add_lead_time(df_times)
     
     print('\nFREQUÊNCIA DE ATIVIDADES:')
-    activity_freq = activity_frequency(df_final)
+    activity_freq = calculate_frequency(df_final, 'atividade')
     print(activity_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE TRANSIÇÕES:')
-    transition_freq = transition_frequency(df_final)
+    transition_freq = calculate_frequency(df_final, 'transicao')
     print(transition_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE TRACES:')
-    trace_freq = trace_frequency(df_final)
+    trace_freq = calculate_frequency(df_final, 'trace')
     print(trace_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE TRACES FINAIS:')
@@ -448,11 +361,11 @@ def pipeline(df: pd.DataFrame) -> pd.DataFrame:
     print(final_trace_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE RECURSOS:')
-    resource_freq = resource_frequency(df_final)
+    resource_freq = calculate_frequency(df_final, 'recurso')
     print(resource_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE GPM (LINHA):')
-    gpm_line_freq = gpm_line_frequency(df_final)
+    gpm_line_freq = calculate_frequency(df_final, 'gpm_nota')
     print(gpm_line_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE GPM (CASO):')
@@ -460,7 +373,7 @@ def pipeline(df: pd.DataFrame) -> pd.DataFrame:
     print(gpm_case_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE PRIORIDADE (LINHA):')
-    priority_line_freq = priority_line_frequency(df_final)
+    priority_line_freq = calculate_frequency(df_final, 'prioridade_nota')
     print(priority_line_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE PRIORIDADE (CASO):')
@@ -468,7 +381,7 @@ def pipeline(df: pd.DataFrame) -> pd.DataFrame:
     print(priority_case_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE TIPO INTERVENÇÃO (LINHA):')
-    intervention_line_freq = intervention_line_frequency(df_final)
+    intervention_line_freq = calculate_frequency(df_final, 'tipo_intervencao_nota')
     print(intervention_line_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE TIPO INTERVENÇÃO (CASO):')
@@ -476,7 +389,7 @@ def pipeline(df: pd.DataFrame) -> pd.DataFrame:
     print(intervention_case_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE CÓDIGO FINALIDADE (LINHA):')
-    purpose_line_freq = purpose_line_frequency(df_final)
+    purpose_line_freq = calculate_frequency(df_final, 'cod_finalidade_nota')
     print(purpose_line_freq.to_string(index=False))
     
     print('\nFREQUÊNCIA DE CÓDIGO FINALIDADE (CASO):')
