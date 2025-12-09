@@ -1,0 +1,9 @@
+id_caso,atividade,timestamp,recurso,sequenciamento,data_fim_desejado_nota,abreviacao_status,gpm_nota,prioridade_nota
+C1,Registrar Pedido,2023-01-01 09:00:00,João,10,2023-01-03 10:00:00,REG,P001,Alta
+C1,Aprovar Pedido,2023-01-01 11:30:00,Maria,25,2023-01-03 10:00:00,APR,P002,Média
+C1,Enviar Produto,2023-01-04 09:00:00,Carlos,40,2023-01-03 10:00:00,ENV,P003,Baixa
+C1,Faturar,2023-01-05 09:00:00,Ana,55,2023-01-03 10:00:00,FAT,P001,Alta
+C2,Registrar Pedido,2023-01-01 10:30:00,João,5,2023-01-01 16:45:00,REG,P002,Alta
+C2,Rejeitar Pedido,2023-01-01 16:45:00,Pedro,30,2023-01-01 16:45:00,REJ,P002,Média
+C3,Registrar Pedido,2023-01-02 10:30:00,João,5,2023-01-01 16:45:00,REG,P001,Alta
+C3,Rejeitar Pedido,2023-01-03 16:45:00,Pedro,30,2023-01-01 16:45:00,REJ,P002,Média
