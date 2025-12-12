@@ -80,14 +80,16 @@ def plot_shap_dependence_top_feature(
     else:
         shap_values_pos = shap_values
 
-    X_df = DataFrame(X_pre, columns=feature_names)
+    X_dense = _to_dense(X_pre)
+    shap_dense = _to_dense(shap_values_pos)
+    X_df = DataFrame(X_dense, columns=feature_names)
 
-    importances = np.mean(np.abs(shap_values_pos), axis=0)
+    importances = np.mean(np.abs(shap_dense), axis=0)
     top_idx = int(np.argmax(importances))
     feat = feature_names[top_idx]
 
     plt.figure(figsize=(8, 5))
-    shap.dependence_plot(top_idx, shap_values_pos, X_df, show=False)
+    shap.dependence_plot(top_idx, shap_dense, X_df, show=False)
     plt.tight_layout()
     plt.show()
 
@@ -104,12 +106,7 @@ def plot_shap_force_single(
     Plota explicação local SHAP (force_plot) para um único exemplo.
     """
     shap_values_pos = _select_shap_values(shap_values, positive_class_index)
-    if isinstance(shap_values, list):
-        shap_values_pos = shap_values[positive_class_index]
-    elif len(shap_values.shape) == 3:
-        shap_values_pos = shap_values[:, :, positive_class_index]
-    else:
-        shap_values_pos = shap_values
+    shap_dense = _to_dense(shap_values_pos)
 
     if hasattr(explainer, 'expected_value'):
         if isinstance(explainer.expected_value, (list, np.ndarray)):
@@ -124,10 +121,9 @@ def plot_shap_force_single(
 
     shap.force_plot(
         base_value=expected_value,
-        shap_values=shap_values_pos[index, :],
+        shap_values=shap_dense[index, :],
         features=X_df.iloc[index, :],
         feature_names=feature_names,
         matplotlib=True,
         show=False
     )
-
