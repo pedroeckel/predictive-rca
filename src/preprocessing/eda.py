@@ -1,10 +1,7 @@
 from typing import Tuple, List, Dict, Any
 import pandas as pd
 
-def check_required_columns(
-    df: pd.DataFrame
-) -> bool:
-
+def check_required_columns(df: pd.DataFrame) -> bool:
     required_columns = [
         'id_caso',
         'atividade', 
@@ -26,48 +23,9 @@ def check_required_columns(
             missing_cols.append(col)
     
     if missing_cols:
-        print(f"Colunas faltando: {', '.join(missing_cols)}")
         return False
     
-    print('Todas as colunas necessárias estão presentes')
     return True
-
-
-def preprocess_delayed_cases(
-    df: pd.DataFrame,
-    case_id_col: str = 'id_caso',
-    timestamp_col: str = 'timestamp',
-    desired_end_col: str = 'data_fim_desejado_nota',
-    sequencing_col: str = 'sequenciamento'
-) -> pd.DataFrame:
-
-    if df.empty:
-        return pd.DataFrame()
-        
-    df = df.copy()
-
-    try:
-        df[timestamp_col] = pd.to_datetime(df[timestamp_col])
-        df[desired_end_col] = pd.to_datetime(df[desired_end_col])
-    except Exception as e:
-        raise ValueError(f'Erro ao converter datas: {e}')
-
-    last_timestamp = df.groupby(case_id_col, sort=False)[timestamp_col].max().reset_index()
-    desired_end = df.groupby(case_id_col, sort=False)[desired_end_col].first().reset_index()
-
-    df_cases = last_timestamp.merge(desired_end, on=case_id_col)
-    df_cases['atraso'] = (df_cases[timestamp_col] > df_cases[desired_end_col]).astype(int)
-
-    delayed_case_ids = df_cases[df_cases['atraso'] == 1][case_id_col].unique().tolist()
-
-    if not delayed_case_ids:
-        return pd.DataFrame()
-
-    df_delayed = df[df[case_id_col].isin(delayed_case_ids)].copy()
-    df_delayed = df_delayed.sort_values([case_id_col, timestamp_col, sequencing_col]).reset_index(drop=True)
-
-    return df_delayed
-
 
 def generate_trace_list(
     df: pd.DataFrame,
@@ -152,7 +110,7 @@ def add_time_between_activities(
     next_timestamp = df.groupby(case_id_col)[timestamp_col].shift(-1)
     df['tempo_atividade_execucao'] = (next_timestamp - df[timestamp_col]).dt.total_seconds() / 86400
     mask_last = df.groupby(case_id_col).cumcount(ascending=False) == 0
-    df.loc[mask_last, 'tempo_atividade_execucao'] = None
+    df.loc[mask_last, 'tempo_atividade_execucao'] = 0
     
     return df
 
@@ -176,6 +134,146 @@ def add_lead_time(
 
     return df
 
+def filter_cases_by_sla(
+    df: pd.DataFrame,
+    sla_hours: float,
+    case_id_col: str = 'id_caso',
+    timestamp_col: str = 'timestamp',
+    sequencing_col: str = 'sequenciamento'
+) -> pd.DataFrame:
+    
+    if df.empty:
+        return pd.DataFrame()
+    
+    df = df.copy()
+
+    try:
+        df[timestamp_col] = pd.to_datetime(df[timestamp_col])
+    except Exception as e:
+        raise ValueError(f'Erro ao converter datas: {e}')
+    
+    df_trace = generate_trace_list(df)
+    df_transition = generate_transitions(df_trace)
+    df_time = add_time_between_activities(df_transition)
+    df_all_cases = add_lead_time(df_time)
+    
+    unique_cases = df_all_cases.drop_duplicates(subset=[case_id_col])[[case_id_col, 'lead_time']]
+    sla_days = sla_hours / 24
+    
+    atraso_map = {}
+    tempo_atraso_map = {}
+    
+    for _, row in unique_cases.iterrows():
+        case_id = row[case_id_col]
+        lead_time = row['lead_time']
+        atraso = 1 if lead_time > sla_days else 0
+        atraso_map[case_id] = atraso
+        tempo_atraso_map[case_id] = max(0, lead_time - sla_days) if atraso == 1 else 0
+    
+    df_all_cases['atraso'] = df_all_cases[case_id_col].map(atraso_map)
+    df_all_cases['tempo_atraso'] = df_all_cases[case_id_col].map(tempo_atraso_map)
+    
+    df_all_cases = df_all_cases.sort_values([case_id_col, timestamp_col, sequencing_col]).reset_index(drop=True)
+    
+    return df_all_cases
+
+
+def filter_cases_by_boxplot(
+    df: pd.DataFrame,
+    case_id_col: str = 'id_caso',
+    timestamp_col: str = 'timestamp',
+    sequencing_col: str = 'sequenciamento'
+) -> pd.DataFrame:
+    
+    if df.empty:
+        return pd.DataFrame()
+    
+    df = df.copy()
+
+    try:
+        df[timestamp_col] = pd.to_datetime(df[timestamp_col])
+    except Exception as e:
+        raise ValueError(f'Erro ao converter datas: {e}')
+
+    df_trace = generate_trace_list(df)
+    df_transition = generate_transitions(df_trace)
+    df_time = add_time_between_activities(df_transition)
+    df_all_cases = add_lead_time(df_time)
+    
+    unique_cases = df_all_cases.drop_duplicates(subset=[case_id_col])[[case_id_col, 'lead_time']]
+    Q1 = unique_cases['lead_time'].quantile(0.25)
+    Q3 = unique_cases['lead_time'].quantile(0.75)
+    IQR = Q3 - Q1
+    upper_bound = Q3 + 1.5 * IQR
+    
+    atraso_map = {}
+    tempo_atraso_map = {}
+    
+    for _, row in unique_cases.iterrows():
+        case_id = row[case_id_col]
+        lead_time = row['lead_time']
+        atraso = 1 if lead_time > upper_bound else 0
+        atraso_map[case_id] = atraso
+        tempo_atraso_map[case_id] = max(0, lead_time - upper_bound) if atraso == 1 else 0
+    
+    df_all_cases['atraso'] = df_all_cases[case_id_col].map(atraso_map)
+    df_all_cases['tempo_atraso'] = df_all_cases[case_id_col].map(tempo_atraso_map)
+    df_all_cases['limite_boxplot'] = upper_bound
+    
+    df_all_cases = df_all_cases.sort_values([case_id_col, timestamp_col, sequencing_col]).reset_index(drop=True)
+    
+    return df_all_cases
+
+
+def filter_cases_by_desired_date(
+    df: pd.DataFrame,
+    case_id_col: str = 'id_caso',
+    timestamp_col: str = 'timestamp',
+    desired_end_col: str = 'data_fim_desejado_nota',
+    sequencing_col: str = 'sequenciamento'
+) -> pd.DataFrame:
+
+    if df.empty:
+        return pd.DataFrame()
+        
+    df = df.copy()
+
+    try:
+        df[timestamp_col] = pd.to_datetime(df[timestamp_col])
+        df[desired_end_col] = pd.to_datetime(df[desired_end_col], errors='coerce')
+    except Exception as e:
+        raise ValueError(f'Erro ao converter datas: {e}')
+
+    unique_cases = df.groupby(case_id_col).agg({
+        timestamp_col: 'max',
+        desired_end_col: 'max'
+    }).reset_index()
+    
+    unique_cases['atraso'] = (
+        unique_cases[timestamp_col] > unique_cases[desired_end_col]
+    ).fillna(False).astype(int)
+    
+    unique_cases['tempo_atraso'] = (
+        unique_cases[timestamp_col] - unique_cases[desired_end_col]
+    ).dt.total_seconds() / 86400
+    
+    unique_cases.loc[unique_cases['atraso'] == 0, 'tempo_atraso'] = 0
+    unique_cases.loc[unique_cases['tempo_atraso'] < 0, 'tempo_atraso'] = 0
+    
+    atraso_map = dict(zip(unique_cases[case_id_col], unique_cases['atraso']))
+    tempo_atraso_map = dict(zip(unique_cases[case_id_col], unique_cases['tempo_atraso']))
+    
+    df_trace = generate_trace_list(df)
+    df_transition = generate_transitions(df_trace)
+    df_time = add_time_between_activities(df_transition)
+    df_all_cases = add_lead_time(df_time)
+    
+    df_all_cases['atraso'] = df_all_cases[case_id_col].map(atraso_map).fillna(0).astype(int)
+    df_all_cases['tempo_atraso'] = df_all_cases[case_id_col].map(tempo_atraso_map).fillna(0)
+    
+    df_all_cases = df_all_cases.sort_values([case_id_col, timestamp_col, sequencing_col]).reset_index(drop=True)
+    
+    return df_all_cases
 
 def calculate_frequency(
     df: pd.DataFrame,
@@ -328,84 +426,90 @@ def get_transitions_with_highest_time(
     return result
 
 
-def pipeline(df: pd.DataFrame) -> pd.DataFrame:
+def get_traces_grouped(
+    df: pd.DataFrame,
+    case_id_col: str = 'id_caso',
+    timestamp_col: str = 'timestamp',
+    sequencing_col: str = 'sequenciamento',
+    trace_col: str = 'trace',
+    lead_time_col: str = 'lead_time',
+    top_n: int = 30
+) -> pd.DataFrame:
     
-    if not check_required_columns(df):
+    if df.empty or trace_col not in df.columns or lead_time_col not in df.columns:
         return pd.DataFrame()
     
-    df_delayed = preprocess_delayed_cases(df)
+    final_traces = (
+        df
+        .sort_values([case_id_col, timestamp_col, sequencing_col])
+        .groupby(case_id_col)
+        .agg({
+            trace_col: 'last',
+            lead_time_col: 'first'
+        })
+        .reset_index()
+    )
     
-    if df_delayed.empty:
-        print('Nenhum caso atrasado encontrado')
+    trace_stats = (
+        final_traces
+        .groupby(trace_col)
+        .agg({
+            lead_time_col: ['mean', 'median']
+        })
+        .reset_index()
+    )
+    
+    trace_stats.columns = [
+        'trace',
+        'media_lead_time',
+        'mediana_lead_time'
+    ]
+    
+    result = (
+        trace_stats
+        .sort_values('media_lead_time', ascending=False)
+        .head(top_n)
+        .reset_index(drop=True)
+    )
+    
+    return result
+
+
+def get_transition_grouped(
+    df: pd.DataFrame,
+    transition_col: str = 'transicao',
+    time_col: str = 'tempo_atividade_execucao',
+    top_n: int = 30
+) -> pd.DataFrame:
+    
+    if df.empty or transition_col not in df.columns or time_col not in df.columns:
         return pd.DataFrame()
     
-    df_traces = generate_trace_list(df_delayed)
-    df_transitions = generate_transitions(df_traces)
-    df_times = add_time_between_activities(df_transitions)
-    df_final = add_lead_time(df_times)
+    valid_transitions = df.dropna(subset=[transition_col, time_col]).copy()
     
-    print('\nFREQUÊNCIA DE ATIVIDADES:')
-    activity_freq = calculate_frequency(df_final, 'atividade')
-    print(activity_freq.to_string(index=False))
+    if valid_transitions.empty:
+        return pd.DataFrame()
     
-    print('\nFREQUÊNCIA DE TRANSIÇÕES:')
-    transition_freq = calculate_frequency(df_final, 'transicao')
-    print(transition_freq.to_string(index=False))
+    transition_stats = (
+        valid_transitions
+        .groupby(transition_col)
+        .agg({
+            time_col: ['mean', 'median']
+        })
+        .reset_index()
+    )
     
-    print('\nFREQUÊNCIA DE TRACES:')
-    trace_freq = calculate_frequency(df_final, 'trace')
-    print(trace_freq.to_string(index=False))
+    transition_stats.columns = [
+        'transicao',
+        'media_tempo',
+        'mediana_tempo'
+    ]
     
-    print('\nFREQUÊNCIA DE TRACES FINAIS:')
-    final_trace_freq = final_trace_frequency(df_final)
-    print(final_trace_freq.to_string(index=False))
+    result = (
+        transition_stats
+        .sort_values('media_tempo', ascending=False)
+        .head(top_n)
+        .reset_index(drop=True)
+    )
     
-    print('\nFREQUÊNCIA DE RECURSOS:')
-    resource_freq = calculate_frequency(df_final, 'recurso')
-    print(resource_freq.to_string(index=False))
-    
-    print('\nFREQUÊNCIA DE GPM (LINHA):')
-    gpm_line_freq = calculate_frequency(df_final, 'gpm_nota')
-    print(gpm_line_freq.to_string(index=False))
-    
-    print('\nFREQUÊNCIA DE GPM (CASO):')
-    gpm_case_freq = gpm_case_frequency(df_final)
-    print(gpm_case_freq.to_string(index=False))
-    
-    print('\nFREQUÊNCIA DE PRIORIDADE (LINHA):')
-    priority_line_freq = calculate_frequency(df_final, 'prioridade_nota')
-    print(priority_line_freq.to_string(index=False))
-    
-    print('\nFREQUÊNCIA DE PRIORIDADE (CASO):')
-    priority_case_freq = priority_case_frequency(df_final)
-    print(priority_case_freq.to_string(index=False))
-    
-    print('\nFREQUÊNCIA DE TIPO INTERVENÇÃO (LINHA):')
-    intervention_line_freq = calculate_frequency(df_final, 'tipo_intervencao_nota')
-    print(intervention_line_freq.to_string(index=False))
-    
-    print('\nFREQUÊNCIA DE TIPO INTERVENÇÃO (CASO):')
-    intervention_case_freq = intervention_case_frequency(df_final)
-    print(intervention_case_freq.to_string(index=False))
-    
-    print('\nFREQUÊNCIA DE CÓDIGO FINALIDADE (LINHA):')
-    purpose_line_freq = calculate_frequency(df_final, 'cod_finalidade_nota')
-    print(purpose_line_freq.to_string(index=False))
-    
-    print('\nFREQUÊNCIA DE CÓDIGO FINALIDADE (CASO):')
-    purpose_case_freq = purpose_case_frequency(df_final)
-    print(purpose_case_freq.to_string(index=False))
-    
-    print('\nTRACES COM MAIOR LEAD TIME:')
-    top_lead_traces = get_traces_with_highest_lead_time(df_final)
-    print(top_lead_traces.to_string(index=False))
-    
-    print('\nTRANSIÇÕES MAIS DEMORADAS:')
-    top_transitions = get_transitions_with_highest_time(df_final)
-    print(top_transitions.to_string(index=False))
-    
-    return df_final
-
-
-df = pd.read_csv(r'C:\Users\Helton\Documents\Análise de Causa Raiz\predictive-rca\data\raw\csv\log_test3.csv')
-processed_df = pipeline(df)
+    return result
