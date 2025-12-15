@@ -10,6 +10,7 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
 - Split estratificado em treino/validação/teste mantendo o balanceamento da classe alvo.
 - Pré-processamento com `ColumnTransformer` (numéricos em *passthrough* + One-Hot para categóricos).
 - Avaliação com AUC-ROC, classification report e matriz de confusão; importância de features (árvores) e gráficos SHAP (summary, dependence, force plot).
+- Arquitetura separada em **backend** (pipeline e modelos) e **frontend** (app Streamlit) para explorar indicadores e testar o pipeline por UI.
 
 ## Estrutura do projeto
 - `src/backend/main.py`: CLI interativo/parametrizável (log, modelos, SLA, otimização).
@@ -18,8 +19,19 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
 - `src/backend/models/`: wrappers que seguem `BaseModel` (LightGBM, XGBoost, CatBoost, RandomForest, LogisticRegression).
 - `src/backend/evaluation/`: métricas, importância de features e análises SHAP.
 - `src/backend/optimization/bayesian.py`: otimização bayesiana usada pelo LightGBM.
+- `src/frontend/streamlite/app.py`: frontend em Streamlit para upload de logs, definição de alvo e exploração de atrasos/indicadores.
 - `docs/`: referências rápidas (`comparativo_modelos.md`, `otimizadores.md`, material de RCA).
 - `data/raw/`: logs de eventos de entrada (ex.: `event_log_sintetico_2000_cases.csv`).
+
+## Frontend Streamlit
+- URL pública: https://predictive-rca.streamlit.app/ (deploy da UI para testar sem instalar nada).
+- Rodar local:
+  ```bash
+  pipenv install        # se ainda não instalou
+  pipenv run start      # atalho definido no Pipfile → streamlit run src/frontend/streamlite/app.py
+  ```
+  ou, manualmente: `pipenv run streamlit run src/frontend/streamlite/app.py`.
+- O app aceita upload de CSV, permite definir o método de atraso (SLA, boxplot, data desejada) e mostra métricas/indicadores visuais para os casos atrasados.
 
 ## Requisitos
 - Python 3.13 (definido em `Pipfile`).

@@ -5,6 +5,7 @@ from typing import Dict, Iterable, Tuple, Type
 import numpy as np
 import pandas as pd
 from lightgbm import LGBMClassifier
+from scipy.sparse import issparse
 from sklearn.metrics import log_loss
 
 from src.backend.config.settings import CONFIG
@@ -41,7 +42,8 @@ class PipelineBuilder:
     - pré-processamento
     - (opcional) otimização bayesiana
     - treino final
-    - avaliação + SHAP
+    - avaliação
+    - explicabilidade (gerada sob demanda via compute_explainability)
     """
 
     def __init__(
@@ -64,6 +66,13 @@ class PipelineBuilder:
         self.model_params = model_params or {}
         self.optimize_hyperparams = optimize_hyperparams
         self.logger = get_logger(self.__class__.__name__)
+
+    @staticmethod
+    def _sanitize_array(arr: np.ndarray) -> np.ndarray:
+        """Converte sparse para dense e elimina NaN/inf para modelagem/explicabilidade."""
+        if issparse(arr):
+            arr = arr.toarray()
+        return np.nan_to_num(arr, copy=False)
 
     # ---------------------------------------------------------
     # CARREGAMENTO DO LOG
@@ -198,6 +207,14 @@ class PipelineBuilder:
             categorical_features,
         )
 
+        # Garantir ausência de NaN e formato numérico antes de treinar/avaliar
+        X_train_pre = self._sanitize_array(X_train_pre)
+        X_val_pre = self._sanitize_array(X_val_pre)
+        X_test_pre = self._sanitize_array(X_test_pre)
+
+        n_features = X_train_pre.shape[1]
+        feature_names = artifacts.feature_names
+
         y_train = splits.y_train.to_numpy()
         y_val = splits.y_val.to_numpy()
         y_test = splits.y_test.to_numpy()
@@ -260,34 +277,91 @@ class PipelineBuilder:
         self.logger.info("Avaliando em teste...")
         evaluate_binary_classification(model, X_test_pre, y_test)
 
-        # ---------------------------------------------------------
-        #  EXPLICABILIDADE
-        # ---------------------------------------------------------
+        return model, artifacts, splits
+
+    def compute_explainability(
+        self,
+        model: BaseModel,
+        artifacts: PreprocessArtifacts,
+        splits: DatasetSplits,
+        dataset_split: str = "test",
+        feature_importance_top_k: int | None = 15,
+    ):
+        """
+        Gera gráficos de importância e SHAP sob demanda.
+
+        Parameters
+        ----------
+        model : BaseModel
+            Modelo já treinado (deve expor atributo `.model` interno).
+        artifacts : PreprocessArtifacts
+            Artefatos de pré-processamento retornados pelo pipeline.
+        splits : DatasetSplits
+            Splits originais para transformar novamente no dataset desejado.
+        dataset_split : str
+            Conjunto para explicabilidade: 'train', 'val' ou 'test'.
+        feature_importance_top_k : int | None
+            Número de features para exibir no gráfico de importância.
+        """
+        valid_splits = {"train": splits.X_train, "val": splits.X_val, "test": splits.X_test}
+        if dataset_split not in valid_splits:
+            raise ValueError(f"dataset_split deve ser um de {list(valid_splits.keys())}")
+
+        X_source = valid_splits[dataset_split]
+        X_pre = artifacts.preprocessor.transform(X_source)
+        X_pre = self._sanitize_array(X_pre)
+
+        feature_names = artifacts.feature_names
+        n_features = X_pre.shape[1]
+        features_match = len(feature_names) == n_features
+        # Se não bater, cria nomes genéricos para não bloquear a explicabilidade
+        if not features_match:
+            self.logger.warning(
+                "Quantidade de features transformadas (%s) difere da lista de nomes (%s); "
+                "gerando nomes genéricos para explicabilidade.",
+                n_features,
+                len(feature_names),
+            )
+            feature_names = [f"feature_{i}" for i in range(n_features)]
+
+        explainability = {"dataset_split": dataset_split}
+
         if hasattr(model, "model") and hasattr(model.model, "feature_importances_"):
-            self.logger.info("Plotando feature importance...")
-            plot_feature_importance(
+            self.logger.info("Gerando gráfico de importância de features...")
+            explainability["feature_importance_fig"] = plot_feature_importance(
                 model.model,
-                artifacts.feature_names,
+                feature_names,
                 max_features=feature_importance_top_k,
+                show=False,
             )
 
         if hasattr(model, "model"):
-            self.logger.info("Computando SHAP values...")
-            explainer, shap_values = compute_shap_values(model.model, X_test_pre)
+            try:
+                self.logger.info("Computando valores SHAP sob demanda...")
+                explainer, shap_values = compute_shap_values(model.model, X_pre)
 
-            self.logger.info("Plotando SHAP summary...")
-            plot_shap_summary(shap_values, X_test_pre, artifacts.feature_names)
+                explainability["shap_summary_fig"] = plot_shap_summary(
+                    shap_values, X_pre, feature_names, show=False
+                )
+                explainability["shap_dependence_fig"] = plot_shap_dependence_top_feature(
+                    shap_values, X_pre, feature_names, show=False
+                )
+                explainability["shap_force_fig"] = plot_shap_force_single(
+                    explainer,
+                    shap_values,
+                    X_pre,
+                    feature_names,
+                    index=0,
+                    show=False,
+                )
+                explainability["explainer"] = explainer
+                explainability["shap_values"] = shap_values
+                explainability["X_pre"] = X_pre
+                explainability["feature_names"] = feature_names
+            except Exception as shap_exc:
+                self.logger.warning(
+                    "Falha ao gerar gráficos SHAP; prosseguindo sem SHAP. Erro: %s",
+                    shap_exc,
+                )
 
-            plot_shap_dependence_top_feature(
-                shap_values, X_test_pre, artifacts.feature_names
-            )
-
-            plot_shap_force_single(
-                explainer,
-                shap_values,
-                X_test_pre,
-                artifacts.feature_names,
-                index=0,
-            )
-
-        return model, artifacts, splits
+        return explainability
