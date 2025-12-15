@@ -26,7 +26,7 @@ Visão geral dos classificadores integrados ao pipeline de *Predictive RCA*, inc
 
 ## Parâmetros de entrada por modelo
 
-### **LightGBMModel** (`src/models/lightgbm_model.py`)
+### **LightGBMModel** (`src/backend/models/lightgbm_model.py`)
 
 * *Wrapper* direto para `LGBMClassifier`; parâmetros são repassados conforme `model_params`.
 * Quando `optimize_hyperparams=True` no `PipelineBuilder`, aplica otimização bayesiana com limites:
@@ -35,28 +35,28 @@ Visão geral dos classificadores integrados ao pipeline de *Predictive RCA*, inc
 * Fixa por padrão:
   `n_estimators=300`, `objective="binary"`, `random_state=42`, `n_jobs=-1`.
 
-### **XGBoostModel** (`src/models/xgboost_model.py`)
+### **XGBoostModel** (`src/backend/models/xgboost_model.py`)
 
 * Utiliza por padrão `eval_metric="logloss"` e `use_label_encoder=False`; demais parâmetros seguem os *defaults* do `XGBClassifier`.
 * Parâmetros mais sensíveis:
   `n_estimators`, `max_depth`, `learning_rate (eta)`, `subsample`,
   `colsample_bytree`, `min_child_weight`, `gamma`.
 
-### **CatBoostModel** (`src/models/catboost_model.py`)
+### **CatBoostModel** (`src/backend/models/catboost_model.py`)
 
 * Configura `verbose=False` por padrão; demais argumentos são repassados ao `CatBoostClassifier`.
 * Parâmetros com maior impacto:
   `depth`, `learning_rate`, `l2_leaf_reg`, `iterations`, `loss_function="Logloss"`.
 * Como usamos *One-Hot Encoding*, não é necessário definir `cat_features` neste *wrapper*.
 
-### **RandomForestModel** (`src/models/random_forest.py`)
+### **RandomForestModel** (`src/backend/models/random_forest.py`)
 
 * Usa *defaults* do `RandomForestClassifier` (`n_estimators=100`, `max_depth=None`, `max_features="sqrt"`).
 * Ajustes recomendados:
   `n_estimators`, `max_depth`, `min_samples_split`,
   `min_samples_leaf`, `class_weight="balanced"` para lidar com desbalanceamento.
 
-### **LogisticRegressionModel** (`src/models/logistic_regression.py`)
+### **LogisticRegressionModel** (`src/backend/models/logistic_regression.py`)
 
 * Define `max_iter=500` para garantir convergência; demais parâmetros seguem os *defaults*.
 * Parâmetros mais importantes:
@@ -67,8 +67,8 @@ Visão geral dos classificadores integrados ao pipeline de *Predictive RCA*, inc
 ### Exemplo via código
 
 ```python
-from src.pipeline.pipeline_builder import PipelineBuilder
-from src.models.xgboost_model import XGBoostModel
+from src.backend.pipeline.pipeline_builder import PipelineBuilder
+from src.backend.models.xgboost_model import XGBoostModel
 
 pipeline = PipelineBuilder(
     model_class=XGBoostModel,
@@ -78,7 +78,7 @@ pipeline = PipelineBuilder(
 pipeline.run_from_event_log("data/raw/event_log.csv", sla_hours=24)
 ```
 
-### Via CLI (`src/main.py`)
+### Via CLI (`src/backend/main.py`)
 
 * Seleção de modelos:
   `--models lightgbm,xgboost`

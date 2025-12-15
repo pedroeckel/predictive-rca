@@ -5,7 +5,7 @@ from typing import Any, Dict
 import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score
 
-from src.models.base_model import ProbabilisticClassifier
+from src.backend.models.base_model import ProbabilisticClassifier
 
 
 def evaluate_binary_classification(
