@@ -9,7 +9,6 @@ plotly = "*"
 scikit-learn = "*"
 lightgbm = "*"
 bayesian-optimization = "*"
-streamlit = "*"
 ipykernel = "*"
 ipywidgets = "*"
 nbformat = "*"
@@ -20,6 +19,7 @@ catboost = "*"
 xgboost = "*"
 pm4py = "*"
 watchdog = "*"
+streamlit = "*"
 
 [dev-packages]
 
