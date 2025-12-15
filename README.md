@@ -4,7 +4,7 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
 
 ## Principais recursos
 - Interface `BaseModel` com wrappers prontos: LightGBM, XGBoost, CatBoost, RandomForest e Regressão Logística; escolha via CLI ou código.
-- Pipeline CLI interativo (`python -m src.main`) para informar log, modelos e SLA, executando cada modelo em sequência; flags opcionais permitem pular prompts.
+- Pipeline CLI interativo (`python -m src.backend.main`) para informar log, modelos e SLA, executando cada modelo em sequência; flags opcionais permitem pular prompts.
 - Otimização bayesiana embutida para LightGBM (log loss negativo em validação).
 - Engenharia de atributos por caso (tempo total, número de eventos, retrabalho, atividade inicial/final, recurso inicial, custo médio).
 - Split estratificado em treino/validação/teste mantendo o balanceamento da classe alvo.
@@ -12,7 +12,7 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
 - Avaliação com AUC-ROC, classification report e matriz de confusão; importância de features (árvores) e gráficos SHAP (summary, dependence, force plot).
 
 ## Estrutura do projeto
-- `src/main.py`: CLI interativo/parametrizável (log, modelos, SLA, otimização).
+- `src/backend/main.py`: CLI interativo/parametrizável (log, modelos, SLA, otimização).
 - `src/backend/pipeline/pipeline_builder.py`: orquestra leitura do log, *feature engineering*, split, pré-processamento, treino, avaliação e SHAP.
 - `src/backend/preprocessing/`: construção de features por caso (`build_case_features`), split estratificado e pré-processamento (`ColumnTransformer`).
 - `src/backend/models/`: wrappers que seguem `BaseModel` (LightGBM, XGBoost, CatBoost, RandomForest, LogisticRegression).
@@ -37,12 +37,12 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
    ```
 2. Execute o pipeline (interativo por padrão):
    ```bash
-   pipenv run python -m src.main
+   pipenv run python -m src.backend.main
    ```
    O script pedirá o caminho do CSV do log (ex.: `data/raw/event_log_sintetico_2000_cases.csv`), modelos desejados (`lightgbm` padrão) e SLA (48h por default no prompt).
 3. Para pular prompts, use os argumentos:
    ```bash
-   pipenv run python -m src.main \
+   pipenv run python -m src.backend.main \
      --log data/raw/event_log_sintetico_2000_cases.csv \
      --models lightgbm,random_forest,catboost \
      --sla_hours 24 \
@@ -80,7 +80,7 @@ pipeline.run_from_event_log("data/raw/seu_log.csv", sla_hours=24)
 ## Configurações úteis
 - `src/backend/config/settings.py`: `RANDOM_STATE`, `SLA_HOURS` (12h na lib) e diretórios padrão. O CLI usa 48h como valor sugerido no prompt, ajustável com `--sla_hours`.
 - `optimize_hyperparams` em `PipelineBuilder` ativa/desativa a otimização bayesiana do LightGBM.
-- Substitua o dataset em `src/main.py` (argumento `--log`) ou passe o caminho diretamente em `run_from_event_log`.
+- Substitua o dataset em `src/backend/main.py` (argumento `--log`) ou passe o caminho diretamente em `run_from_event_log`.
 
 ## Documentação de apoio
 - Comparativo dos modelos integrados: `docs/comparativo_modelos.md`.

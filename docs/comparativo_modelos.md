@@ -78,7 +78,7 @@ pipeline = PipelineBuilder(
 pipeline.run_from_event_log("data/raw/event_log.csv", sla_hours=24)
 ```
 
-### Via CLI (`src/main.py`)
+### Via CLI (`src/backend/main.py`)
 
 * Seleção de modelos:
   `--models lightgbm,xgboost`

@@ -25,7 +25,7 @@ Resumo das abordagens previstas para o projeto e o motivo de adotarmos a otimiza
 - Implementação em `src/backend/optimization/bayesian.py` usando `bayes_opt.BayesianOptimization`.
 
 ## Como ativar
-- **CLI**: `python -m src.main --optimize --models lightgbm --log path/para/log.csv --sla_hours 24`
+- **CLI**: `python -m src.backend.main --optimize --models lightgbm --log path/para/log.csv --sla_hours 24`
 - **Código**:
   ```python
   from src.backend.pipeline.pipeline_builder import PipelineBuilder
