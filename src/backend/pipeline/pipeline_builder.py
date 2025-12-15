@@ -7,30 +7,30 @@ import pandas as pd
 from lightgbm import LGBMClassifier
 from sklearn.metrics import log_loss
 
-from src.config.settings import CONFIG
-from src.preprocessing.build_features import TargetBuilder, build_case_features
-from src.preprocessing.split import (
+from src.backend.config.settings import CONFIG
+from src.backend.preprocessing.build_features import TargetBuilder, build_case_features
+from src.backend.preprocessing.split import (
     DatasetSplits,
     stratified_case_split,
 )
-from src.preprocessing.preprocess import (
+from src.backend.preprocessing.preprocess import (
     PreprocessArtifacts,
     build_preprocessor,
     fit_preprocessor_and_transform,
 )
-from src.models.base_model import BaseModel
-from src.models.lightgbm_model import LightGBMModel
-from src.optimization.bayesian import optimize_bayesian
-from src.evaluation.metrics import evaluate_binary_classification
-from src.evaluation.feature_importance import plot_feature_importance
-from src.evaluation.shap_analysis import (
+from src.backend.models.base_model import BaseModel
+from src.backend.models.lightgbm_model import LightGBMModel
+from src.backend.optimization.bayesian import optimize_bayesian
+from src.backend.evaluation.metrics import evaluate_binary_classification
+from src.backend.evaluation.feature_importance import plot_feature_importance
+from src.backend.evaluation.shap_analysis import (
     compute_shap_values,
     plot_shap_summary,
     plot_shap_dependence_top_feature,
     plot_shap_force_single,
 )
-from src.utils.logs import get_logger
-from src.utils.timer import timer
+from src.backend.utils.logs import get_logger
+from src.backend.utils.timer import timer
 
 
 class PipelineBuilder:

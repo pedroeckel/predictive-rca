@@ -1,0 +1,9 @@
+id_caso,atividade,timestamp,recurso,sequenciamento,data_fim_desejado_nota,abreviacao_status,gpm_nota,prioridade_nota,cod_finalidade_nota,tipo_intervencao_nota
+C1,A,2023-01-01 09:00:00,João,10,2023-01-03 10:00:00,A,P001,Alta,COD001,TIPO_A
+C1,B,2023-01-01 11:30:00,Maria,25,2023-01-03 10:00:00,B,P002,Média,COD001,TIPO_A
+C1,C,2023-01-04 09:00:00,Carlos,40,2023-01-03 10:00:00,C,P003,Baixa,COD001,TIPO_A
+C1,D,2023-01-05 09:00:00,Ana,55,2023-01-03 10:00:00,D,P001,Alta,COD001,TIPO_A
+C2,A,2023-01-01 10:30:00,João,5,2023-01-01 16:45:00,A,P002,Alta,COD002,TIPO_B
+C2,E,2023-01-01 16:45:00,Pedro,30,2023-01-01 16:45:00,E,P002,Média,COD002,TIPO_B
+C3,A,2023-01-02 10:30:00,João,5,2023-01-01 16:45:00,A,P001,Alta,COD002,TIPO_B
+C3,D,2023-01-03 10:30:00,Pedro,30,2023-01-01 16:45:00,D,P002,Média,COD002,TIPO_B

@@ -9,6 +9,7 @@ plotly = "*"
 scikit-learn = "*"
 lightgbm = "*"
 bayesian-optimization = "*"
+streamlit = "*"
 ipykernel = "*"
 ipywidgets = "*"
 nbformat = "*"
@@ -18,8 +19,12 @@ shap = "*"
 catboost = "*"
 xgboost = "*"
 pm4py = "*"
+watchdog = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.13"
+
+[scripts]
+start = "streamlit run src/frontend/streamlite/app.py"
