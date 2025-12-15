@@ -1,14 +1,22 @@
+from pathlib import Path
+import sys
+
+# Garantir que o diretório raiz do projeto esteja no sys.path para resolver `src.*`
+ROOT_DIR = Path(__file__).resolve().parents[3]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
 import streamlit as st
 import pandas as pd
-from src.pipeline.pipeline_builder import PipelineBuilder
-from src.models.lightgbm_model import LightGBMModel
-from src.models.xgboost_model import XGBoostModel
-from src.models.catboost_model import CatBoostModel
-from src.models.random_forest import RandomForestModel
-from src.models.logistic_regression import LogisticRegressionModel
+from src.backend.pipeline.pipeline_builder import PipelineBuilder
+from src.backend.models.lightgbm_model import LightGBMModel
+from src.backend.models.xgboost_model import XGBoostModel
+from src.backend.models.catboost_model import CatBoostModel
+from src.backend.models.random_forest import RandomForestModel
+from src.backend.models.logistic_regression import LogisticRegressionModel
 import numpy as np
 import plotly.express as px
-from src.preprocessing.eda import (
+from src.backend.preprocessing.eda import (
             check_required_columns,
             filter_cases_by_sla,
             filter_cases_by_boxplot,

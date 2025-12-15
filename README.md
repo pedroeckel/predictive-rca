@@ -13,11 +13,11 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
 
 ## Estrutura do projeto
 - `src/main.py`: CLI interativo/parametrizável (log, modelos, SLA, otimização).
-- `src/pipeline/pipeline_builder.py`: orquestra leitura do log, *feature engineering*, split, pré-processamento, treino, avaliação e SHAP.
-- `src/preprocessing/`: construção de features por caso (`build_case_features`), split estratificado e pré-processamento (`ColumnTransformer`).
-- `src/models/`: wrappers que seguem `BaseModel` (LightGBM, XGBoost, CatBoost, RandomForest, LogisticRegression).
-- `src/evaluation/`: métricas, importância de features e análises SHAP.
-- `src/optimization/bayesian.py`: otimização bayesiana usada pelo LightGBM.
+- `src/backend/pipeline/pipeline_builder.py`: orquestra leitura do log, *feature engineering*, split, pré-processamento, treino, avaliação e SHAP.
+- `src/backend/preprocessing/`: construção de features por caso (`build_case_features`), split estratificado e pré-processamento (`ColumnTransformer`).
+- `src/backend/models/`: wrappers que seguem `BaseModel` (LightGBM, XGBoost, CatBoost, RandomForest, LogisticRegression).
+- `src/backend/evaluation/`: métricas, importância de features e análises SHAP.
+- `src/backend/optimization/bayesian.py`: otimização bayesiana usada pelo LightGBM.
 - `docs/`: referências rápidas (`comparativo_modelos.md`, `otimizadores.md`, material de RCA).
 - `data/raw/`: logs de eventos de entrada (ex.: `event_log_sintetico_2000_cases.csv`).
 
@@ -51,8 +51,8 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
 
 ### Usando outro log ou modelo
 ```python
-from src.pipeline.pipeline_builder import PipelineBuilder
-from src.models.catboost_model import CatBoostModel
+from src.backend.pipeline.pipeline_builder import PipelineBuilder
+from src.backend.models.catboost_model import CatBoostModel
 
 pipeline = PipelineBuilder(
     model_class=CatBoostModel,
@@ -78,7 +78,7 @@ pipeline.run_from_event_log("data/raw/seu_log.csv", sla_hours=24)
 - Artefatos do pré-processamento (nomes de features expandidas) retornados pelo `PipelineBuilder`.
 
 ## Configurações úteis
-- `src/config/settings.py`: `RANDOM_STATE`, `SLA_HOURS` (12h na lib) e diretórios padrão. O CLI usa 48h como valor sugerido no prompt, ajustável com `--sla_hours`.
+- `src/backend/config/settings.py`: `RANDOM_STATE`, `SLA_HOURS` (12h na lib) e diretórios padrão. O CLI usa 48h como valor sugerido no prompt, ajustável com `--sla_hours`.
 - `optimize_hyperparams` em `PipelineBuilder` ativa/desativa a otimização bayesiana do LightGBM.
 - Substitua o dataset em `src/main.py` (argumento `--log`) ou passe o caminho diretamente em `run_from_event_log`.
 
