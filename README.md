@@ -8,7 +8,7 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
 - Otimização bayesiana embutida para LightGBM (log loss negativo em validação).
 - Engenharia de atributos por caso (tempo total, número de eventos, retrabalho, atividade inicial/final, recurso inicial, custo médio).
 - Split estratificado em treino/validação/teste mantendo o balanceamento da classe alvo.
-- Pré-processamento com `ColumnTransformer` (numéricos em *passthrough* + One-Hot para categóricos).
+ - Pré-processamento com `ColumnTransformer` (numéricos em *passthrough* + One-Hot para categóricos, com nomes legíveis no formato `coluna=valor` para os gráficos de explicabilidade).
 - Avaliação com AUC-ROC, classification report e matriz de confusão; importância de features (árvores) e gráficos SHAP (summary, dependence, force plot).
 - Arquitetura separada em **backend** (pipeline e modelos) e **frontend** (app Streamlit) para explorar indicadores e testar o pipeline por UI.
 
@@ -32,6 +32,7 @@ Plataforma enxuta para **análise preditiva de causa raiz** aplicada a logs de p
   ```
   ou, manualmente: `pipenv run streamlit run src/frontend/streamlite/app.py`.
 - O app aceita upload de CSV, permite definir o método de atraso (SLA, boxplot, data desejada) e mostra métricas/indicadores visuais para os casos atrasados.
+- Controles de exploração: escolha o *Top N* de atividades/recursos/traces exibidos e ajuste quantas linhas mostrar na prévia do dataset de modelagem.
 
 ## Requisitos
 - Python 3.13 (definido em `Pipfile`).

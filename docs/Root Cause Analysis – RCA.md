@@ -124,6 +124,7 @@ O método SHAP fornece:
 * **efeito marginal (dependence plots)**
 * **explicação individual por caso (force plot)**
 * **interações entre atributos**
+* nomes legíveis de *features* (dummies do One-Hot exibidas como `coluna=valor`) e controle de *Top N* na UI para foco rápido
 
 Exemplo prático típico:
 
@@ -215,4 +216,3 @@ Um pipeline completo:
 RCA em mineração de processos evoluiu do paradigma puramente qualitativo para uma **abordagem quantitativa explicável**, onde modelos supervisionados de alto desempenho — acompanhados de análise SHAP — fornecem evidências robustas sobre o impacto de cada fator no comportamento real do processo.
 
 Essa abordagem não substitui a análise de especialistas, mas amplia a capacidade de diagnóstico com rigor estatístico e replicabilidade.
-
