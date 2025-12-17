@@ -36,6 +36,7 @@ def generate_trace_list(
 ) -> pd.DataFrame:
 
     if df.empty:
+        df = df.copy()
         df['trace_list'] = []
         df['trace'] = []
         return df
@@ -46,7 +47,7 @@ def generate_trace_list(
         df[timestamp_col] = pd.to_datetime(df[timestamp_col])
     except Exception as e:
         raise ValueError(f'Erro ao converter datas: {e}')
-
+    
     df = df.sort_values([case_id_col, timestamp_col, sequencing_col])
 
     all_sequences = []
@@ -66,7 +67,7 @@ def generate_trace_list(
         all_sequences.append(current_activities.copy())
 
     df['trace_list'] = all_sequences
-    df['trace'] = df['trace_list'].apply(lambda x: ' -> '.join(x))
+    df['trace'] = df['trace_list'].apply(lambda x: ' -> '.join(map(str, x)))
 
     return df
 
@@ -79,13 +80,15 @@ def generate_transitions(
     sequencing_col: str = 'sequenciamento',
 ) -> pd.DataFrame:
     
+    df = df.sort_values([case_id_col, timestamp_col, sequencing_col])
+
     if df.empty:
+        df = df.copy()
         df['transicao'] = None
         return df
     
     df = df.copy()
-    df = df.sort_values([case_id_col, timestamp_col, sequencing_col])
-    next_status = df.groupby(case_id_col)[status_col].shift(-1)
+    next_status = df.groupby(case_id_col, sort=False)[status_col].shift(-1)
     mask_valid = next_status.notna()
     df['transicao'] = None
     df.loc[mask_valid, 'transicao'] = (
@@ -101,15 +104,18 @@ def add_time_between_activities(
     sequencing_col: str = 'sequenciamento'
 ) -> pd.DataFrame:
     
+    df = df.sort_values([case_id_col, timestamp_col, sequencing_col])
+
     if df.empty:
+        df = df.copy()
         df['tempo_atividade_execucao'] = None
         return df
     
     df = df.copy()
-    df = df.sort_values([case_id_col, timestamp_col, sequencing_col])
-    next_timestamp = df.groupby(case_id_col)[timestamp_col].shift(-1)
+
+    next_timestamp = df.groupby(case_id_col, sort=False)[timestamp_col].shift(-1)
     df['tempo_atividade_execucao'] = (next_timestamp - df[timestamp_col]).dt.total_seconds() / 86400
-    mask_last = df.groupby(case_id_col).cumcount(ascending=False) == 0
+    mask_last = df.groupby(case_id_col, sort=False).cumcount(ascending=False) == 0
     df.loc[mask_last, 'tempo_atividade_execucao'] = 0
     
     return df
@@ -122,12 +128,15 @@ def add_lead_time(
     sequencing_col: str = 'sequenciamento'
 ) -> pd.DataFrame:
     
+    df = df.sort_values([case_id_col, timestamp_col, sequencing_col])
+
     if df.empty:
+        df = df.copy()
         df['lead_time'] = None
         return df
     
     df = df.copy()
-    df = df.sort_values([case_id_col, timestamp_col, sequencing_col])
+
     case_start = df.groupby(case_id_col)[timestamp_col].transform('min')
     case_end = df.groupby(case_id_col)[timestamp_col].transform('max')
     df['lead_time'] = (case_end - case_start).dt.total_seconds() / 86400
@@ -294,7 +303,7 @@ def final_trace_frequency(
     trace_col: str = 'trace'
 ) -> pd.DataFrame:
     
-    final_traces = df.groupby(case_id_col)[trace_col].last().value_counts()
+    final_traces = df.groupby(case_id_col, sort=False)[trace_col].last().value_counts()
     result = pd.DataFrame({
         'trace final': final_traces.index,
         'quantidade': final_traces.values,
@@ -309,7 +318,7 @@ def gpm_case_frequency(
     gpm_col: str = 'gpm_nota'
 ) -> pd.DataFrame:
 
-    gpm_by_case = df.groupby(case_id_col)[gpm_col].apply(
+    gpm_by_case = df.groupby(case_id_col, sort=False)[gpm_col].apply(
         lambda x: x.dropna().unique()
     ).explode().dropna()
     
@@ -326,7 +335,7 @@ def priority_case_frequency(
     priority_col: str = 'prioridade_nota'
 ) -> pd.DataFrame:
 
-    priority_by_case = df.groupby(case_id_col)[priority_col].apply(
+    priority_by_case = df.groupby(case_id_col, sort=False)[priority_col].apply(
         lambda x: x.dropna().unique()
     ).explode().dropna()
     
@@ -343,7 +352,7 @@ def intervention_case_frequency(
     intervention_col: str = 'tipo_intervencao_nota'
 ) -> pd.DataFrame:
 
-    intervention_by_case = df.groupby(case_id_col)[intervention_col].apply(
+    intervention_by_case = df.groupby(case_id_col, sort=False)[intervention_col].apply(
         lambda x: x.dropna().unique()
     ).explode().dropna()
     
@@ -361,7 +370,7 @@ def purpose_case_frequency(
     purpose_col: str = 'cod_finalidade_nota'
 ) -> pd.DataFrame:
 
-    purpose_by_case = df.groupby(case_id_col)[purpose_col].apply(
+    purpose_by_case = df.groupby(case_id_col, sort=False)[purpose_col].apply(
         lambda x: x.dropna().unique()
     ).explode().dropna()
     
@@ -387,7 +396,7 @@ def get_traces_with_highest_lead_time(
 
     df_final_traces = (
         df_sorted
-        .groupby(case_id_col)
+        .groupby(case_id_col, sort=False)
         .agg({
             trace_col: 'last',
             lead_time_col: 'first' 
@@ -442,7 +451,7 @@ def get_traces_grouped(
     final_traces = (
         df
         .sort_values([case_id_col, timestamp_col, sequencing_col])
-        .groupby(case_id_col)
+        .groupby(case_id_col, sort=False)
         .agg({
             trace_col: 'last',
             lead_time_col: 'first'

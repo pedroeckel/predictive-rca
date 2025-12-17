@@ -16,22 +16,25 @@ def evaluate_binary_classification(
     verbose: bool = True,
 ) -> Dict[str, Any]:
     """
-    Avalia um modelo binário com AUC-ROC, classificação e matriz de confusão.
+    Avalia um modelo binário com AUC-ROC, acurácia, classificação e matriz de confusão.
     """
     y_proba = model.predict_proba(X)[:, 1]
     y_pred = (y_proba >= threshold).astype(int)
 
     auc = roc_auc_score(y_true, y_proba)
+    accuracy = np.mean(y_true == y_pred)
     report_str = classification_report(y_true, y_pred)
     matrix = confusion_matrix(y_true, y_pred)
 
     if verbose:
         print("AUC-ROC:", auc)
+        print("Accuracy:", accuracy)
         print("\nClassification report:\n", report_str)
         print("\nConfusion matrix:\n", matrix)
 
     return {
         "auc": float(auc),
+        "accuracy": float(accuracy),
         "classification_report": report_str,
         "confusion_matrix": matrix,
     }

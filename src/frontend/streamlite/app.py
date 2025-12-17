@@ -48,6 +48,12 @@ from src.backend.preprocessing.eda import (
     get_transition_grouped,
 )
 
+
+@st.cache_data
+def _corr_cached(df):
+    """Calcula correlação com cache para melhor performance."""
+    return df.corr()
+
 # =========================================================
 # UI: Page config + CSS
 # =========================================================
@@ -284,7 +290,10 @@ else:
 df_complete["target"] = df_complete["atraso"].astype(int)
 state.df_complete = df_complete
 
-st.bar_chart(df_complete["target"].value_counts())
+aggregated_cases = df_complete.drop_duplicates(subset=['id_caso'])
+target_counts = aggregated_cases["target"].value_counts()
+
+st.bar_chart(target_counts)
 
 st.markdown("---")
 
@@ -293,7 +302,7 @@ st.markdown("---")
 # =========================================================
 
 
-st.markdown('<div class="section-title">2. Indicadores de Causa Raiz Geral</div>', unsafe_allow_html=True)
+st.markdown('<div class="section-title">3. Indicadores de Causa Raiz Geral</div>', unsafe_allow_html=True)
 st.markdown(
     '<div class="small-muted">Análises exploratórias integradas: qualidade, processo, gargalos e contrato semântico para o pipeline.</div>',
     unsafe_allow_html=True,
@@ -356,13 +365,13 @@ with tabP:
     with st.expander("Configurações de visualização", expanded=True):
         c1, c2, c3, c4 = st.columns(4)
         with c1:
-            show_tables = st.toggle("Mostrar tabelas (Top-100)", value=True)
+            show_tables = st.toggle("Mostrar tabelas (Top-100)", value=True, key="tabP_show_tables")
         with c2:
-            show_traces = st.toggle("Analisar variantes (trace)", value=("trace" in df_raw.columns))
+            show_traces = st.toggle("Analisar variantes (trace)", value=("trace" in df_raw.columns), key="tabP_show_traces")
         with c3:
-            show_trans = st.toggle("Analisar transições (transicao)", value=("transicao" in df_raw.columns))
+            show_trans = st.toggle("Analisar transições (transicao)", value=("transicao" in df_raw.columns), key="tabP_show_trans")
         with c4:
-            top_k = st.number_input("Top N", min_value=5, max_value=100, value=20, step=5)
+            top_k = st.number_input("Top N", min_value=5, max_value=100, value=20, step=5, key="tabP_top_k")
 
     col1, col2 = st.columns(2)
 
@@ -643,7 +652,7 @@ if run_model:
 
             m1, m2 = st.columns(2)
             m1.metric("AUC (teste)", f"{metrics['auc']:.4f}")
-            m2.metric("Acurácia (teste)", f"{metrics.get('accuracy', np.nan):.4f}" if "accuracy" in metrics else "N/A")
+            m2.metric("Acurácia (teste)", f"{metrics['accuracy']:.4f}")
 
             with st.expander("Relatório de classificação", expanded=True):
                 st.text(metrics["classification_report"])
